@@ -20,9 +20,13 @@ import {
     ModalBody,
     ModalFooter,
     Alert
-  } from "reactstrap";
+} from "reactstrap";
 
-  const options = [
+import axios from "axios";
+
+const API = process.env.REACT_APP_SERVER_URL;
+
+const options = [
     "Select Your Role",
     "manager",
     "customer"
@@ -36,14 +40,22 @@ const texts = [
 
 const defaultOption = options[0];
 
-  
+
 
 
 const RegistrationForm = () => {
 
     const [roleDropdown, setroleDropdown] = useState(false);
     const [selectedRole, setSelectedRole] = useState(defaultOption);
-    const [checked,setChecked] = useState(false);
+    const [checked, setChecked] = useState(false);
+    const [user, setUser] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        password: ""
+    })
+
+
 
 
     const _onSelect = (value) => {
@@ -51,22 +63,48 @@ const RegistrationForm = () => {
         setSelectedRole(value);
     };
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUser((prev) => {
+            return { ...prev, [name]: value };
+        });
+    }
+
+    const handleRegistration = async () => {
+
+        console.log(API)
+        const headers = {
+            "Content-Type": "application/json",
+            "role": selectedRole.toUpperCase()
+        };
+
+        let response = await axios
+            .get(
+                `${API}/manager/get-loandetails`,
+                {
+                    headers: headers
+                }
+            );
+
+        console.log(response.headers)
+
+    }
 
     return (
-        <div style={{marginTop:"20%",width:"100%"}}>
-            
+        <div style={{ marginTop: "20%", width: "100%" }}>
+
             <Row form>
-            <Col md={12}>
+                <Col md={12}>
 
-            <FormGroup>
+                    <FormGroup>
 
-            <h4 className="mb-2">
-                <div >
-                   Register
-                </div>
-               
-            </h4>
-            {/* <Label for="exampleEmail" className="normal_text">Please Select how you want to Signup :</Label> */}
+                        <h4 className="mb-2">
+                            <div >
+                                Register
+                            </div>
+
+                        </h4>
+                        {/* <Label for="exampleEmail" className="normal_text">Please Select how you want to Signup :</Label> */}
 
                         <UncontrolledButtonDropdown>
                             <Dropdown
@@ -111,58 +149,54 @@ const RegistrationForm = () => {
                             </Dropdown>
                         </UncontrolledButtonDropdown>
                     </FormGroup>
-            </Col>
-            
+                </Col>
+
 
             </Row>
 
             <Row form>
-            <Row>
-            <Col md={6}>
-                    <FormGroup className="username">
-                        <Label for="exampleEmail" className="normal_text">Full Name</Label>
-                        <Input
+                <Row>
+                    <Col md={6}>
+                        <FormGroup className="username">
+                            <Label for="exampleEmail" className="normal_text">Full Name</Label>
+                            <Input
 
-                            id="emailorphone"
-                            type="text"
-                            name="name"
-                            placeholder="Type here.."
-                            className="normal_text"
-                        // onChange={handleChange}
-                        />
-                    </FormGroup>
+                                id="emailorphone"
+                                type="text"
+                                name="name"
+                                placeholder="Type here.."
+                                className="normal_text"
+                                onChange={handleChange}
+                            />
+                        </FormGroup>
+                    </Col>
 
-                    
+                    <Col md={6}>
 
-                    
-                </Col>
-               
-                <Col md={6}>
-                  
 
-                    <FormGroup className="username">
-                        <Label for="exampleEmail" className="normal_text">Phone Number</Label>
-                        <Input
+                        <FormGroup className="username">
+                            <Label for="exampleEmail" className="normal_text">Phone Number</Label>
+                            <Input
 
-                            id="emailorphone"
-                            type="number"
-                            name="phone"
-                            placeholder="Type here.."
-                            className="normal_text"
-                        // onChange={handleChange}
-                        />
-                    </FormGroup>
-                </Col>
-            </Row>
-                
+                                id="emailorphone"
+                                type="number"
+                                name="phone"
+                                placeholder="Type here.."
+                                className="normal_text"
+                                onChange={handleChange}
+                            />
+                        </FormGroup>
+                    </Col>
+                </Row>
+
             </Row>
             <Row >
 
                 <Col md={6}>
 
-                <FormGroup>
+                    <FormGroup>
                         <Label for="examplePassword" className="normal_text">
-                             Email
+                            Email
                         </Label>
                         <Input
                             // onKeyDown={this.handleKeyDownChange}
@@ -172,20 +206,20 @@ const RegistrationForm = () => {
                             name="email"
                             placeholder="Type here.."
                             className="normal_text"
-                        // onChange={handlePassword}
+                            onChange={handleChange}
                         />
 
                     </FormGroup>
 
-                
-                   
+
+
                 </Col>
-             
+
                 <Col md={6}>
-                 
-                <FormGroup>
+
+                    <FormGroup>
                         <Label for="examplePassword" className="normal_text">
-                             Password
+                            Password
                         </Label>
                         <Input
                             // onKeyDown={this.handleKeyDownChange}
@@ -195,11 +229,11 @@ const RegistrationForm = () => {
                             name="password"
                             placeholder="Type here.."
                             className="normal_text"
-                        // onChange={handlePassword}
+                            onChange={handleChange}
                         />
 
                     </FormGroup>
-                 
+
                 </Col>
             </Row>
 
@@ -222,7 +256,7 @@ const RegistrationForm = () => {
                         {" "}
                         I accept Loan Zone's{" "}
                         <a
-                        style={{color:"blue"}}
+                            style={{ color: "blue" }}
                             // href="#"
                             target="_blank"
                         >
@@ -230,7 +264,7 @@ const RegistrationForm = () => {
                         </a>{" "}
                         and{" "}
                         <a
-                        style={{color:"blue"}}
+                            style={{ color: "blue" }}
 
                             // href="#"
                             target="_blank"
@@ -240,21 +274,22 @@ const RegistrationForm = () => {
                     </Label>
                 </FormGroup>
             </Row>
-         
+
 
             <Row >
 
-            <Col md={6}>
+                <Col md={6}>
 
 
-                <Button
-                    color="primary"
-                    className="btn btn-md brand_background_color normal_text ml-auto"
-                >
-                    {" "}
-                    Signup
-                </Button>
-            </Col>
+                    <Button
+                        color="primary"
+                        className="btn btn-md brand_background_color normal_text ml-auto"
+                        onClick={handleRegistration}
+                    >
+                        {" "}
+                        Signup
+                    </Button>
+                </Col>
             </Row>
         </div>
     )
