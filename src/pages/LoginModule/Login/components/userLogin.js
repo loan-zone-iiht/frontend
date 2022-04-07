@@ -38,35 +38,20 @@ const defaultOption = options[0];
 
 
 
-const UserLogin = ({forgotPasswordSelected}) => {
+const UserLogin = ({forgotPasswordSelected,getUserCredentials}) => {
 
-    const [isOTP, setisOTP] = useState(false);
-    const [isPassword, setisPassword] = useState(false)
-    const [selectedRole, setSelectedRole] = useState(defaultOption);
-    const [password, setPassword] = useState("");
-    const [emailORphone, setemailORphone] = useState("");
     const [roleDropdown, setroleDropdown] = useState(false);
-   
-
-
-    const _onSelect = (value) => {
-        console.log(value)
-        setSelectedRole(value);
-    };
+    const [selectedRole, setSelectedRole] = useState(defaultOption);
+ 
 
     const handleChange = (e) => {
-        setemailORphone(e.target.value);
+        const { name, value } = e.target;
+        getUserCredentials((prev) => {
+            return { ...prev, [name]: value };
+        });
 
     };
 
-    const handlePassword = (e) => {
-        setPassword(e.target.value)
-    };
-
-    const handleForgotPasswordChange = () => {
-        
-        forgotPasswordSelected(true)
-    }
 
     return (
         <div style={{marginTop:"20%"}}>
@@ -113,7 +98,8 @@ const UserLogin = ({forgotPasswordSelected}) => {
                                             key={i}
                                             onClick={() => {
                                                 if (i != 0) {
-                                                    _onSelect(option);
+                                                    setSelectedRole(option);
+                                                    localStorage.setItem("role",option)
                                                 }
                                             }}
                                         >
@@ -134,7 +120,7 @@ const UserLogin = ({forgotPasswordSelected}) => {
 
                             id="emailorphone"
                             type="email"
-                            name="email"
+                            name="emailOrPhone"
                             placeholder="Type here"
                             className="normal_text"
                             onChange={handleChange}
@@ -165,12 +151,12 @@ const UserLogin = ({forgotPasswordSelected}) => {
                             name="password"
                             placeholder="Type here"
                             className="normal_text"
-                            onChange={handlePassword}
+                            onChange={handleChange}
                         />
                         {/* <Input type="password" name="password" id="examplePassword" placeholder="Password here..."/> */}
                         <a
                             // href="#"
-                            onClick={handleForgotPasswordChange}
+                            onClick={()=>forgotPasswordSelected(true)}
                             className="btn-sm btn btn-link normal_text forgot_password_remove_left_padding"
                         >
                             Forgot Password?

@@ -21,9 +21,9 @@ import {
     Alert
 } from "reactstrap";
 
-const ForgotPasword = () => {
+const ForgotPasword = ({emailOrPhone}) => {
 
-    const [emailORphone, setemailORphone] = useState("");
+    
 
 
     const handleOTP = (event) => {
@@ -47,7 +47,7 @@ const ForgotPasword = () => {
                 <Col>
                     <FormGroup>
                         <Label for="exampleEmail" className="normal_text mb-1">
-                            Enter OTP sent to {emailORphone}
+                            Enter OTP sent to {emailOrPhone}
                         </Label>
                         <Input
                             type="text"
@@ -80,13 +80,7 @@ const ForgotPasword = () => {
                 <FormGroup check>
                     <Input
                         type="checkbox"
-                        //   value={this.agreeterms}
                         disbled="true"
-                        //   onChange={(e) => {
-                        //     this.setState({ checked: e.target.checked })
-
-                        //   }}
-                        //   checked={this.state.checked}
                         name="check"
                         className="normal_text"
                         id="exampleCheck"

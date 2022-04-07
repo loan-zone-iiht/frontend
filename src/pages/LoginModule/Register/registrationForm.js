@@ -22,7 +22,11 @@ import {
     Alert
 } from "reactstrap";
 
-import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import instance from "../../../config/apiConfig";
+import { Navigate } from "react-router-dom";
 
 const API = process.env.REACT_APP_SERVER_URL;
 
@@ -47,6 +51,7 @@ const RegistrationForm = () => {
 
     const [roleDropdown, setroleDropdown] = useState(false);
     const [selectedRole, setSelectedRole] = useState(defaultOption);
+    const [pan, setPan] = useState("")
     const [checked, setChecked] = useState(false);
     const [user, setUser] = useState({
         name: "",
@@ -57,9 +62,35 @@ const RegistrationForm = () => {
 
 
 
+    const validate = () => {
+
+        let regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (!(user.phone.match('[0-9]{10}'))) {
+            toast.info('Please Provide valid Phone Number');
+            return false;
+        }
+        else if (!regexEmail.test(user.email)) {
+            toast.info('Please Provide Valid Email');
+            return false;
+        }
+        else if (!checked) {
+            toast.info('Please accept terms and conditions');
+            return false;
+        }
+        else if (selectedRole == defaultOption) {
+            toast.info('Please select Role')
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
 
     const _onSelect = (value) => {
-        console.log(value)
+        localStorage.setItem("role", value)
         setSelectedRole(value);
     };
 
@@ -70,31 +101,74 @@ const RegistrationForm = () => {
         });
     }
 
-    const handleRegistration = async () => {
+    const verifyPan = async () => {
 
-        console.log(API)
-        const headers = {
-            "Content-Type": "application/json",
-            "role": selectedRole.toUpperCase()
-        };
+        let panPayload = {
+            panNo: pan,
+            cibilScore: Math.round(Math.random() * (700 - 600) + 600)
+        }
 
-        let response = await axios
-            .get(
-                `${API}/manager/get-loandetails`,
-                {
-                    headers: headers
-                }
-            );
+        let response = await instance.post(`/create-pan`, panPayload);
+        if (response.headers.success) {
 
-        console.log(response.headers)
+        }
+
+        console.log(response)
 
     }
+
+
+    const handleRegistration = async () => {
+
+
+        if (validate()) {
+
+            if(!pan){
+                toast.info("Please Enter Pan Number");
+                return ;
+            }
+
+            let url;
+             url = (localStorage.getItem("role")=="customer") ? `/create-customer?panNo=${pan}`: "/manager-signup";
+
+            let response = await instance.post(url, user);
+
+            if (response.headers.success) {
+                toast.success("Woho.! Succesfully registered.Reload to Login");
+                setUser({
+                    name: "",
+                    email: "",
+                    phone: "",
+                    password: ""
+                })
+                
+
+            }
+            else {
+                toast.error("Something wrong. Please try again")
+            }
+
+        }
+
+    }
+
 
     return (
         <div style={{ marginTop: "20%", width: "100%" }}>
 
             <Row form>
                 <Col md={12}>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={3000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    />
 
                     <FormGroup>
 
@@ -160,7 +234,7 @@ const RegistrationForm = () => {
                         <FormGroup className="username">
                             <Label for="exampleEmail" className="normal_text">Full Name</Label>
                             <Input
-
+                                value={user.name}
                                 id="emailorphone"
                                 type="text"
                                 name="name"
@@ -177,6 +251,7 @@ const RegistrationForm = () => {
                         <FormGroup className="username">
                             <Label for="exampleEmail" className="normal_text">Phone Number</Label>
                             <Input
+                                value={user.phone}
 
                                 id="emailorphone"
                                 type="number"
@@ -201,6 +276,7 @@ const RegistrationForm = () => {
                         <Input
                             // onKeyDown={this.handleKeyDownChange}
                             id="pass"
+                            value={user.email}
 
                             type="email"
                             name="email"
@@ -224,6 +300,7 @@ const RegistrationForm = () => {
                         <Input
                             // onKeyDown={this.handleKeyDownChange}
                             id="pass"
+                            value={user.password}
 
                             type="password"
                             name="password"
@@ -235,10 +312,59 @@ const RegistrationForm = () => {
                     </FormGroup>
 
                 </Col>
+
+
             </Row>
 
+            {selectedRole == "customer" && (
+                
+                <Row>
+
+                <Alert style ={{marginLeft:"10px"}} color="success">Please verify your Pan before Signup !</Alert>
+                    <Col md={9}>
+
+                        <FormGroup>
+                           
+                            <Input
+
+                                id="pass"
+                                // value={user.password}
+
+                                type="text"
+                                name="pan"
+                                placeholder="Enter your Pan Number.."
+                                className="normal_text"
+                                onChange={(e) => setPan(e.target.value)}
+                            />
+
+                        </FormGroup>
+                    </Col>
+
+                    <Col md={3}>
+                        <FormGroup>
+
+                            <Button
+                             
+                               
+                                color="success"
+                                className="btn btn-md brand_background_color normal_text ml-auto "
+                                onClick={verifyPan}
+                            >
+                                {" "}
+                                Verify Pan
+                            </Button>
+
+                        </FormGroup>
+
+
+                    </Col>
+
+                </Row>
+
+            )}
+
             <Row>
-                <FormGroup check className="ml-3">
+                <FormGroup style={{marginLeft :"10px"}} check className="ml-3">
                     <Input
                         type="checkbox"
                         // value={this.agreeterms}
@@ -282,6 +408,7 @@ const RegistrationForm = () => {
 
 
                     <Button
+                       
                         color="primary"
                         className="btn btn-md brand_background_color normal_text ml-auto"
                         onClick={handleRegistration}
