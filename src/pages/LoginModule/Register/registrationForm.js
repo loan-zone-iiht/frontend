@@ -123,7 +123,7 @@ const RegistrationForm = () => {
 
         if (validate()) {
 
-            if(!pan){
+            if(!pan && localStorage.getItem("role")=="customer"){
                 toast.info("Please Enter Pan Number");
                 return ;
             }
@@ -158,18 +158,7 @@ const RegistrationForm = () => {
 
             <Row form>
                 <Col md={12}>
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={3000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                    />
-
+                   
                     <FormGroup>
 
                         <h4 className="mb-2">

@@ -6,6 +6,8 @@ import ForgotPasword from "./components/forgotPassword"
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import instance from "../../../config/apiConfig";
+
 
 import {
     Col,
@@ -13,6 +15,7 @@ import {
     Button,
     Form,
 } from "reactstrap";
+import { Navigate } from "react-router-dom";
 
 
 const options = [
@@ -33,13 +36,32 @@ const defaultOption = options[0];
 const Login = ({ isLoginOrRegistered }) => {
 
     const [isForgotPassword, setisForgotPassword] = useState(false)
+    const [isLoggedIn, setisLoggedIn] = useState(false)
     const [credentials, setCredentials] = useState({
         emailOrPhone: "",
         password: ""
     })
 
-    const forgotPasswordSelected = (selected) => {
-        setisForgotPassword(selected)
+    const forgotPasswordSelected = async (selected) => {
+
+        let forgotPasswordPayload = {};
+
+        if (credentials.emailOrPhone.includes(".com")) forgotPasswordPayload["email"] = credentials.emailOrPhone;
+        else forgotPasswordPayload["phone"] = credentials.emailOrPhone;
+
+        let url;
+        url = (localStorage.getItem("role") == "customer") ? "/customer-send-otp" : "/manager-send-otp";
+
+        try {
+            let response = await instance.post(url, forgotPasswordPayload);
+            console.log(response, "response")
+            if (response.headers.success) setisForgotPassword(selected);
+        } catch (e) {
+            toast.info("Email or Phone Doesnt Exist");
+
+        }
+
+
     }
 
     const getUserCredentials = (val) => {
@@ -62,19 +84,35 @@ const Login = ({ isLoginOrRegistered }) => {
 
     }
 
-    const handleLoginUsingPassword = () => {
-
-        // emailOrPhone
+    const handleLoginUsingPassword = async () => {
 
         if (validate()) {
+
+            if (!localStorage.getItem("role")) {
+                toast.info("Please Select Role");
+                return;
+            }
+
+            let url;
+            url = (localStorage.getItem("role") == "customer") ? "/customer-login" : "/manager-login";
+
             let payload = {
                 password: credentials.password
             };
+
             if (credentials.emailOrPhone.includes(".com")) payload["email"] = credentials.emailOrPhone;
             else payload["phone"] = credentials.emailOrPhone;
 
-            console.log(payload,"payload");
-            
+            console.log(payload, "payload");
+
+            let response = await instance.post(url, payload);
+            if (response.headers.success) {
+                setisLoggedIn(true)
+            }
+            else {
+                toast.info("Something is wrong.Please try again later.");
+            }
+
         }
     }
 
@@ -85,7 +123,10 @@ const Login = ({ isLoginOrRegistered }) => {
 
 
             <Row className="divider" />
-            <div >
+            <div>
+                {isLoggedIn && (
+                    <Navigate to="/dashboards" />
+                )}
                 <div>
                     {!isForgotPassword ? (
                         <div>
