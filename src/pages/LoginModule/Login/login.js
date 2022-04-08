@@ -3,10 +3,11 @@ import React, { Fragment, useState } from "react";
 import UserLogin from "./components/userLogin"
 import ForgotPasword from "./components/forgotPassword"
 
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import axios from "axios";
+import instance from "../../../config/apiConfig";
+
 
 import {
     Col,
@@ -14,6 +15,7 @@ import {
     Button,
     Form,
 } from "reactstrap";
+import { Navigate } from "react-router-dom";
 
 
 const options = [
@@ -31,31 +33,106 @@ const texts = [
 const defaultOption = options[0];
 
 
-// const API = process.env.REACT_APP_SERVER_URL;
-
-const Login = ({isLoginOrRegistered}) => {
+const Login = ({ isLoginOrRegistered }) => {
 
     const [isForgotPassword, setisForgotPassword] = useState(false)
+    const [isLoggedIn, setisLoggedIn] = useState(false)
+    const [credentials, setCredentials] = useState({
+        emailOrPhone: "",
+        password: ""
+    })
 
-    const forgotPasswordSelected = (selected) => {
-        console.log(selected)
-        setisForgotPassword(selected)
+    const forgotPasswordSelected = async (selected) => {
+
+        let forgotPasswordPayload = {};
+
+        if (credentials.emailOrPhone.includes(".com")) forgotPasswordPayload["email"] = credentials.emailOrPhone;
+        else forgotPasswordPayload["phone"] = credentials.emailOrPhone;
+
+        let url;
+        url = (localStorage.getItem("role") == "customer") ? "/customer-send-otp" : "/manager-send-otp";
+
+        try {
+            let response = await instance.post(url, forgotPasswordPayload);
+            console.log(response, "response")
+            if (response.headers.success) setisForgotPassword(selected);
+        } catch (e) {
+            toast.info("Email or Phone Doesnt Exist");
+
+        }
+
+
+    }
+
+    const getUserCredentials = (val) => {
+        // console.log(val)
+        setCredentials(val)
+    }
+
+    const validate = () => {
+
+        let regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+
+        if (!(credentials.emailOrPhone.match('[0-9]{10}') || regexEmail.test(credentials.emailOrPhone))) {
+            toast.info('Please Provide valid Phone Or Email');
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    }
+
+    const handleLoginUsingPassword = async () => {
+
+        if (validate()) {
+
+            if (!localStorage.getItem("role")) {
+                toast.info("Please Select Role");
+                return;
+            }
+
+            let url;
+            url = (localStorage.getItem("role") == "customer") ? "/customer-login" : "/manager-login";
+
+            let payload = {
+                password: credentials.password
+            };
+
+            if (credentials.emailOrPhone.includes(".com")) payload["email"] = credentials.emailOrPhone;
+            else payload["phone"] = credentials.emailOrPhone;
+
+            console.log(payload, "payload");
+
+            let response = await instance.post(url, payload);
+            if (response.headers.success) {
+                setisLoggedIn(true)
+            }
+            else {
+                toast.info("Something is wrong.Please try again later.");
+            }
+
+        }
     }
 
     return (
         <Form  >
             {!isForgotPassword ? (
-                <UserLogin forgotPasswordSelected = {forgotPasswordSelected} />) : (<ForgotPasword />)}
+                <UserLogin forgotPasswordSelected={forgotPasswordSelected} getUserCredentials={getUserCredentials} />) : (<ForgotPasword emailOrPhone={credentials.emailOrPhone} />)}
 
 
             <Row className="divider" />
-            <div >
+            <div>
+                {isLoggedIn && (
+                    <Navigate to="/dashboards" />
+                )}
                 <div>
                     {!isForgotPassword ? (
                         <div>
                             <a onClick={() => {
                                 isLoginOrRegistered(false)
-                               
+
                             }} target="_blank" className="" >
                                 Create an account
                             </a>{" "}
@@ -63,7 +140,8 @@ const Login = ({isLoginOrRegistered}) => {
                                 color="primary"
                                 style={{ marginLeft: "5px" }}
                                 className="btn btn-md brand_background_color normal_text"
-                                
+                                onClick={handleLoginUsingPassword}
+
                             >
                                 {" "}
                                 Login

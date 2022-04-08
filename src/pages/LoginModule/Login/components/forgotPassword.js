@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import { Navigate } from "react-router-dom";
 import {
     Col,
     Row,
@@ -7,38 +8,56 @@ import {
     FormGroup,
     Label,
     Input,
-    Spinnner,
-    UncontrolledButtonDropdown,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    Container,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Alert
 } from "reactstrap";
-
-const ForgotPasword = () => {
-
-    const [emailORphone, setemailORphone] = useState("");
+import instance from "../../../../config/apiConfig";
+import { toast, ToastContainer } from "react-toastify";
 
 
-    const handleOTP = (event) => {
-        // this.setState({ userOTP: event.target.value });
-    };
+const ForgotPasword = ({ emailOrPhone }) => {
+
+    const [otp, setOTP] = useState("")
+    const [isVerified, setisVerified] = useState(false)
+    const [checked, setChecked] = useState(false)
+
+    const verifyOtp = async () => {
+
+        if(!checked){
+            toast.info("Please check terms and Conditions");
+            return ;
+        }
+
+        let url;
+        url = (localStorage.getItem("role") == "customer") ? "/customer-login" : "/manager-login";
+
+        let payload = {
+            otp: otp
+        };
+
+        if (emailOrPhone.includes(".com")) payload["email"] = emailOrPhone;
+        else payload["phone"] = emailOrPhone;
+
+        console.log(payload, "payload");
+
+        let response = await instance.post(url, payload);
+        if (response.headers.success) {
+            setisVerified(true)
+        }
+        else {
+            toast.info("Please check your OTP");
+        }
+
+    }
 
     return (
         <div style={{ marginTop: "20%" }}>
 
             <h4 className="mb-4 ">
                 <div >
-                    Forgot Pasword
+                    Forgot Password
                 </div>
 
             </h4>
+            {isVerified && (<Navigate to="/dashboards" />)}
 
             <Row className="divider" />
 
@@ -47,14 +66,14 @@ const ForgotPasword = () => {
                 <Col>
                     <FormGroup>
                         <Label for="exampleEmail" className="normal_text mb-1">
-                            Enter OTP sent to {emailORphone}
+                            Enter OTP sent to {emailOrPhone.substring(0, 9) + ".."}
                         </Label>
                         <Input
-                            type="text"
+                            type="number"
                             id="exampleEmail"
                             placeholder="Enter OTP here..."
                             className="normal_text"
-                            onChange={handleOTP}
+                            onChange={(e) => setOTP(e.target.value)}
                             autoComplete="off"
                         />
                     </FormGroup>
@@ -66,9 +85,9 @@ const ForgotPasword = () => {
                         color="primary"
                         size="md"
                         className="btn mt-4 "
-                    // onClick={this.verifyOtp}
+                        onClick={verifyOtp}
                     >
-                        Verify OTP
+                        Verify OTP and Login
                     </Button>
                 </Col>
 
@@ -79,14 +98,14 @@ const ForgotPasword = () => {
 
                 <FormGroup check>
                     <Input
-                        type="checkbox"
-                        //   value={this.agreeterms}
-                        disbled="true"
-                        //   onChange={(e) => {
-                        //     this.setState({ checked: e.target.checked })
 
-                        //   }}
-                        //   checked={this.state.checked}
+                        onChange={(e) => {
+                            setChecked(e.target.checked)
+
+                        }}
+                        checked={checked}
+                        type="checkbox"
+                        disbled="true"
                         name="check"
                         className="normal_text"
                         id="exampleCheck"
