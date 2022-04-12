@@ -110,7 +110,7 @@ const RegistrationForm = () => {
 
         let response = await instance.post(`/create-pan`, panPayload);
         if (response.headers.success) {
-
+            toast.info("Pan Successfully verified.")
         }
 
         console.log(response)
