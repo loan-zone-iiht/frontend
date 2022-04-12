@@ -1,133 +1,67 @@
-import React from "react";
-import { Row, Col } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Row, Col, Table } from "reactstrap";
+
+import Navbar from "../../Layout/Navbar";
+import Tables from "../../components/Tables";
+
+import instance from "../../config/apiConfig";
+
 
 const Dashboards = () => {
 
-    const showPost = () => {
-        console.log("Test")
-        return (
-            <div className="widget-content-left " >
-                <div className="widget-heading">
-                    Manager Admin
-                </div>
-                <div className="widget-subheading opacity-8 ">
-                    Sayak Mukherjee
-                </div>
-            </div>
-        );
+    const [loandetails, setLoanDetails] = useState([])
+
+    const fetchDetails = () => {
+        if (localStorage.getItem("role") == "manager") {
+            fetchLoanDetails();
+        }
+
     }
+
+    const fetchLoanDetails = async () => {
+        let response = await instance.get(`/manager/get-loandetails?role=MANAGER`);
+        console.log(response.data)
+        setLoanDetails(response.data);
+    }
+
+    useEffect(() => {
+        fetchDetails();
+    }, [])
+
+
 
     return (
         <div>
-            <nav class="navbar navbar-expand bg-primary navbar-dark fixed-top">
-                <div class="container-fluid">
-                    <a class="navbar-brand"  >LoanZone Dashboard</a>
-                    <div class="collapse navbar-collapse">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link">Features</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" >Pricing</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div className="menu-header-content text-left">
-                    <div className="widget-content p-0">
-                        <div className="widget-content-wrapper">
-                            <div className="widget-content-left mr-3" onClick={showPost}>
-                                <Row>
+            <Navbar />
 
-                                    <Col>
-                                        {/* <img
-                                            width={42}
-                                            className="rounded-circle"
-                                            src="logo192.png"
-                                            alt=""
-                                        /> */}
+            {localStorage.getItem("role") == "manager" ? (
 
-                                    </Col>
-                                    <Col>
-                                        <p>Ashish</p>
-                                    </Col>
-                                </Row>
+                <div className="container mt-3">
+                    {/* //First <h1> tag is hidden for both the roles */}
+                    <h1>Loan Details -- Manager</h1>
+                    <h3>Pending Loan Details</h3>
+                    <br></br>
+                    <Tables fetchLoanDetails={fetchLoanDetails} allRecords={true} loanDetails={loandetails} />
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <h3>All Loan Details</h3>
+                    <Tables fetchLoanDetails={fetchLoanDetails} allRecords={false} loanDetails={loandetails} />
+                </div>
 
-                            </div>
-                        </div>
-                    </div>
+            ) : (
+                <div className="container mt-3">
+                    {/* //First <h1> tag is hidden for both the roles */}
+                    
+                    <h1>Loan Details - Customer</h1> 
+                    <h3>Start here Ashish</h3>
+                    <br></br>
+                
                 </div>
-            </nav>
-            <div class="container mt-3">
-                <h1>Loan Details</h1>
-                <p>Loan Details</p>
-                <div class="table-bordered">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Loan ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Loan Amount</th>
-                                <th>Loan Tenure</th>
-                                <th>Interest Rate %</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>100001</td>
-                                <td>Saswata Dutta</td>
-                                <td>sus@example.com</td>
-                                <td>1234567890</td>
-                                <td>1,000,000</td>
-                                <td>15</td>
-                                <td>5</td>
-                                <td>Approved</td>
-                            </tr>
-                            <tr>
-                                <td>100002</td>
-                                <td>Sayak Mukherjee</td>
-                                <td>dopalkasayak@example.com</td>
-                                <td>7894562110</td>
-                                <td>1,500,000</td>
-                                <td>20</td>
-                                <td>9</td>
-                                <td>Pending</td>
-                            </tr>
-                            <tr>
-                                <td>100003</td>
-                                <td>Ashish Gupta</td>
-                                <td>ashish@example.com</td>
-                                <td>6954123569</td>
-                                <td>500000</td>
-                                <td>10</td>
-                                <td>11</td>
-                                <td>Rejected</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            )}
+
         </div>
     )
-}
-
-const showPost = () => {
-    return (
-        <div className="widget-content-left " >
-            <div className="widget-heading">
-                Manager Admin
-            </div>
-            <div className="widget-subheading opacity-8 ">
-                Sayak Mukherjee
-            </div>
-        </div>
-    );
 }
 
 export default Dashboards;

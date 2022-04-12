@@ -104,14 +104,16 @@ const Login = ({ isLoginOrRegistered }) => {
             else payload["phone"] = credentials.emailOrPhone;
 
             console.log(payload, "payload");
+            try{
 
-            let response = await instance.post(url, payload);
-            if (response.headers.success) {
-                setisLoggedIn(true)
-            }
-            else {
+                let response = await instance.post(url, payload);
+                if (response && response.headers.success) setisLoggedIn(true);
+
+            }catch(e){
                 toast.info("Something is wrong.Please try again later.");
             }
+         
+            
 
         }
     }
