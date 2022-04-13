@@ -5,12 +5,13 @@ import Navbar from "../../Layout/Navbar";
 import Tables from "../../components/Tables";
 
 import instance from "../../config/apiConfig";
+import { useLocation } from "react-router-dom";
 
 
 const Dashboards = () => {
 
     const [loandetails, setLoanDetails] = useState([])
-
+    const location = useLocation();
     const fetchDetails = () => {
         if (localStorage.getItem("role") == "manager") {
             fetchLoanDetails();
@@ -23,6 +24,11 @@ const Dashboards = () => {
         console.log(response.data)
         setLoanDetails(response.data);
     }
+
+    useEffect(()=>{
+        const userState = location.state;
+        console.log(userState);
+    },[location])
 
     useEffect(() => {
         fetchDetails();
