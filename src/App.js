@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Navigate, Routes } from 'react-router-dom'
 
 import Login from "./pages/LoginModule/index";
 import Dashboards from './pages/Dashboards';
+import ApplicationForm from './pages/ApplyForms/applicationForm';
 
 
 const App = () => (
@@ -10,6 +11,7 @@ const App = () => (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/dash" element={<Dashboards />} />
+      <Route path="/apply" element={<ApplicationForm />} />
 
       <Route
         path="*"

@@ -19,51 +19,44 @@ const Dashboards = () => {
 
     return (
         <div>
-            <nav class="navbar navbar-expand bg-primary navbar-dark fixed-top">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-                    <a class="navbar-brand"  >LoanZone Dashboard</a>
-                    <div class="collapse navbar-collapse">
-                        <ul class="navbar-nav">
+                    <a class="navbar-brand" href="/dash">
+                        LoanZone Dashboard
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link">Home</a>
+                                <a class="nav-link" aria-current="page" href="/dash">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link">Features</a>
+                                <a class="nav-link" href="/contact">Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" >Pricing</a>
                             </li>
                         </ul>
-                    </div>
-                </div>
-                <div className="menu-header-content text-left">
-                    <div className="widget-content p-0">
-                        <div className="widget-content-wrapper">
-                            <div className="widget-content-left mr-3" onClick={showPost}>
-                                <Row>
-
-                                    <Col>
-                                        {/* <img
-                                            width={42}
-                                            className="rounded-circle"
-                                            src="logo192.png"
-                                            alt=""
-                                        /> */}
-
-                                    </Col>
-                                    <Col>
-                                        <p>Ashish</p>
-                                    </Col>
-                                </Row>
-
-                            </div>
-                        </div>
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Account
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        {/* <li><a class="dropdown-item" >Manage account</a></li> */}
+                                        <li><a class="dropdown-item" href="/login">Logout</a></li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </nav>
             <div class="container mt-3">
                 <h1>Loan Details</h1>
-                <p>Loan Details</p>
                 <div class="table-bordered">
                     <table class="table table-striped">
                         <thead>
