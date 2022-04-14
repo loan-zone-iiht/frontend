@@ -98,12 +98,21 @@ const CalculatorPage = () => {
   return (
     <React.Fragment>
       {/* {console.log(paymentState)} */}
-      <Container aria-rowspan="1">
+      <Container
+        style={{
+          padding: "10px",
+          //   outline: "5px 0px 5px 0px dotted green",
+          boxShadow: "-5px 0px 0px 0px black, 5px 0px 0px 0px black",
+        }}
+      >
         <div className="">
-          <h4>Loan</h4>
+          <h2>Loan Calculator</h2>
+          <hr />
           <div style={{ display: "flex" }}>
             <div>
-              <Form >
+              <h4>Inputs</h4>
+              <hr />
+              <Form>
                 <FormGroup row>
                   <Label sm={3} label="Amount" for="exampleRange1">
                     Amount
@@ -215,38 +224,61 @@ const CalculatorPage = () => {
               </Form>
             </div>
             <div style={{ marginLeft: "auto" }}>
-              <Label label="Total Payback" for="exampleRange4">
-                Total Payback
-              </Label>
-              <Input
-                id="totalRes"
-                name="totalRes"
-                placeholder="Total"
-                type="text"
-                value={loanRes.totalRes}
-              />
-              <Label label="Payback Rate" for="exampleRange4">
-                Monthly Rate
-              </Label>
-              <Input
-                id="paybackRes"
-                name="paybackRes"
-                placeholder="Rate"
-                type="text"
-                value={loanRes.paybackRes}
-              />
-              <Label label="Total Interest" for="exampleRange5">
-                Total Interest
-              </Label>
-              <Input
-                id="totalInterestRes"
-                name="totalInterestRes"
-                placeholder="interest"
-                type="text"
-                value={loanRes.totalInterestRes}
-              />
+              <h4>Results</h4>
+              <hr />
+              <Form>
+                <FormGroup row>
+                  <Label sm={4} label="Total Payback" for="exampleRange4">
+                    Total Payback
+                  </Label>
+                  <Col sm={8}>
+                    <Input
+                      id="totalRes"
+                      name="totalRes"
+                      placeholder="Total"
+                      type="text"
+                      disabled
+                      readOnly
+                      value={loanRes.totalRes}
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={4} label="Payback Rate" for="exampleRange4">
+                    Monthly Rate
+                  </Label>
+                  <Col sm={8}>
+                    <Input
+                      id="paybackRes"
+                      name="paybackRes"
+                      placeholder="Rate"
+                      type="text"
+                      disabled
+                      readOnly
+                      value={loanRes.paybackRes}
+                    />
+                  </Col>
+                </FormGroup>
+                <FormGroup row>
+                  <Label sm={4} label="Total Interest" for="exampleRange5">
+                    Total Interest
+                  </Label>
+                  <Col sm={8}>
+                    <Input
+                      id="totalInterestRes"
+                      name="totalInterestRes"
+                      placeholder="interest"
+                      type="text"
+                      disabled
+                      readOnly
+                      value={loanRes.totalInterestRes}
+                    />
+                  </Col>
+                </FormGroup>
+              </Form>
             </div>
           </div>
+          <hr />
           <h4>Payments</h4>
           <div
             className=""
@@ -263,7 +295,7 @@ const CalculatorPage = () => {
               className=".container-sm "
               style={{
                 width: "70%",
-                height: "30vh",
+                height: "50vh",
                 overflowX: "hidden",
               }}
             >
@@ -274,7 +306,7 @@ const CalculatorPage = () => {
                     <th>Payment</th>
                     <th>Principal</th>
                     <th>Interest</th>
-                    <th>Remaining Debt</th>
+                    <th>Remaining Principal</th>
                   </tr>
                 </thead>
                 <tbody>
