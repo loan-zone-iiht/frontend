@@ -104,16 +104,20 @@ const Login = ({ isLoginOrRegistered }) => {
             else payload["phone"] = credentials.emailOrPhone;
 
             console.log(payload, "payload");
-            try{
+            try {
 
                 let response = await instance.post(url, payload);
-                if (response && response.headers.success) setisLoggedIn(true);
+                console.log(response)
+                if (response && response.headers.success) {
+                    localStorage.setItem("loanId", response.data.loanDetail.loanId)
+                    setisLoggedIn(true);
+                }
 
-            }catch(e){
+            } catch (e) {
                 toast.info("Something is wrong.Please try again later.");
             }
-         
-            
+
+
 
         }
     }
@@ -127,7 +131,16 @@ const Login = ({ isLoginOrRegistered }) => {
             <Row className="divider" />
             <div>
                 {isLoggedIn && (
-                    <Navigate to="/dashboards" />
+                    <Navigate
+
+                        to={{
+                            pathname: "/dashboards",
+                            // search: "?utm=your+face",
+                            state: { id: 1 }
+                        }}
+
+
+                    />
                 )}
                 <div>
                     {!isForgotPassword ? (

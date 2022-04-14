@@ -7,15 +7,20 @@ import Tables from "../../components/Tables";
 import instance from "../../config/apiConfig";
 
 
-const Dashboards = () => {
+const Dashboards = (props) => {
 
     const [loandetails, setLoanDetails] = useState([])
+
+    
 
     const fetchDetails = () => {
         if (localStorage.getItem("role") == "manager") {
             fetchLoanDetails();
         }
-
+        else {
+            fetchSingleLoanDetail()
+        }
+        
     }
 
     const fetchLoanDetails = async () => {
@@ -24,8 +29,13 @@ const Dashboards = () => {
         setLoanDetails(response.data);
     }
 
+    const fetchSingleLoanDetail = async () => {
+        let response
+    }
+
     useEffect(() => {
         fetchDetails();
+
     }, [])
 
 
