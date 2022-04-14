@@ -7,7 +7,10 @@ import {
   Form,
   Col,
   FormGroup,
+  InputGroupText,
+  InputGroup,
 } from "reactstrap";
+import { currencyFormatterRupee, currencyFormatter } from "../../utils";
 
 const CalculatorPage = () => {
   const [loanInput, setLoanInput] = useState({
@@ -46,14 +49,12 @@ const CalculatorPage = () => {
       loanInput.frequency
     ) {
       var payments = [];
-      // var payments = [Array.from({ length: loanInput.tenure + 1 })];
       var rate = loanInput.interestRate / 100 / (12 / loanInput.frequency);
       var noOfPayments = parseInt(
         loanInput.tenure * (12 / loanInput.frequency)
       );
       // console.log(noOfPayments,"rate");
 
-      // var c = r / (1 - Math.pow(1 + r, -loanInput.tenure)) * loanInput.principal;
       //payment amount
       var paymentAmount =
         (rate * loanInput.principal) / (1 - Math.pow(1 + rate, -noOfPayments));
@@ -81,11 +82,16 @@ const CalculatorPage = () => {
         var interest = remainingPrincipal * rate;
         payments[i] = {
           index: i,
-          amount: Math.round(paymentAmount * 100.0) / 100,
-          principal: Math.round((paymentAmount - interest) * 100.0) / 100,
-          interest: Math.round(interest * 100.0) / 100,
-          remainingAmount:
-            Math.round((total - paymentAmount * i) * 100.0) / 100,
+          amount: currencyFormatterRupee(
+            Math.round(paymentAmount * 100.0) / 100
+          ),
+          principal: currencyFormatterRupee(
+            Math.round((paymentAmount - interest) * 100.0) / 100
+          ),
+          interest: currencyFormatterRupee(Math.round(interest * 100.0) / 100),
+          remainingAmount: currencyFormatterRupee(
+            Math.round((total - paymentAmount * i) * 100.0) / 100
+          ),
         };
         remainingPrincipal -= paymentAmount - interest;
       }
@@ -118,14 +124,18 @@ const CalculatorPage = () => {
                     Amount
                   </Label>
                   <Col sm={5}>
-                    <Input
-                      id="principal-in"
-                      name="principal"
-                      placeholder="principal"
-                      type="text"
-                      onChange={handleInputChange}
-                      value={loanInput.principal}
-                    />
+                    <InputGroup>
+                      <InputGroupText>₹</InputGroupText>
+                      <Input
+                        id="principal-in"
+                        name="principal"
+                        placeholder="principal"
+                        type="text"
+                        aria-label="SSS"
+                        onChange={handleInputChange}
+                        value={loanInput.principal}
+                      />
+                    </InputGroup>
                   </Col>
                   <Col sm={4}>
                     <Input
@@ -145,14 +155,17 @@ const CalculatorPage = () => {
                     Tenure
                   </Label>
                   <Col sm={5}>
-                    <Input
-                      id="tenure-in"
-                      name="tenure"
-                      placeholder="tenure"
-                      type="text"
-                      onChange={handleInputChange}
-                      value={loanInput.tenure}
-                    />
+                    <InputGroup>
+                      <InputGroupText>Years</InputGroupText>
+                      <Input
+                        id="tenure-in"
+                        name="tenure"
+                        placeholder="tenure"
+                        type="text"
+                        onChange={handleInputChange}
+                        value={loanInput.tenure}
+                      />
+                    </InputGroup>
                   </Col>
                   <Col sm={4}>
                     <Input
@@ -172,14 +185,17 @@ const CalculatorPage = () => {
                     Interest Rate
                   </Label>
                   <Col sm={5}>
-                    <Input
-                      id="interestRate-in"
-                      name="interestRate"
-                      placeholder="Interest Rate"
-                      type="text"
-                      onChange={handleInputChange}
-                      value={loanInput.interestRate}
-                    />
+                    <InputGroup>
+                      <InputGroupText>%</InputGroupText>
+                      <Input
+                        id="interestRate-in"
+                        name="interestRate"
+                        placeholder="Interest Rate"
+                        type="text"
+                        onChange={handleInputChange}
+                        value={loanInput.interestRate}
+                      />
+                    </InputGroup>
                   </Col>
                   <Col sm={4}>
                     <Input
@@ -199,14 +215,18 @@ const CalculatorPage = () => {
                     Frequency
                   </Label>
                   <Col sm={5}>
-                    <Input
-                      id="frequency-in"
-                      name="frequency"
-                      placeholder="Frequency"
-                      type="text"
-                      onChange={handleInputChange}
-                      value={loanInput.frequency}
-                    />
+                    <InputGroup>
+                      <InputGroupText>Per</InputGroupText>
+                      <Input
+                        id="frequency-in"
+                        name="frequency"
+                        placeholder="Frequency"
+                        type="text"
+                        onChange={handleInputChange}
+                        value={loanInput.frequency}
+                      />
+                      <InputGroupText>Months</InputGroupText>
+                    </InputGroup>
                   </Col>
                   <Col sm={4}>
                     <Input
@@ -232,15 +252,18 @@ const CalculatorPage = () => {
                     Total Payback
                   </Label>
                   <Col sm={8}>
-                    <Input
-                      id="totalRes"
-                      name="totalRes"
-                      placeholder="Total"
-                      type="text"
-                      disabled
-                      readOnly
-                      value={loanRes.totalRes}
-                    />
+                    <InputGroup>
+                      <InputGroupText>₹</InputGroupText>
+                      <Input
+                        id="totalRes"
+                        name="totalRes"
+                        placeholder="Total"
+                        type="text"
+                        disabled
+                        readOnly
+                        value={currencyFormatter(loanRes.totalRes)}
+                      />
+                    </InputGroup>
                   </Col>
                 </FormGroup>
                 <FormGroup row>
@@ -248,15 +271,18 @@ const CalculatorPage = () => {
                     Monthly Rate
                   </Label>
                   <Col sm={8}>
-                    <Input
-                      id="paybackRes"
-                      name="paybackRes"
-                      placeholder="Rate"
-                      type="text"
-                      disabled
-                      readOnly
-                      value={loanRes.paybackRes}
-                    />
+                    <InputGroup>
+                      <InputGroupText>₹</InputGroupText>
+                      <Input
+                        id="paybackRes"
+                        name="paybackRes"
+                        placeholder="Rate"
+                        type="text"
+                        disabled
+                        readOnly
+                        value={currencyFormatter(loanRes.paybackRes)}
+                      />
+                    </InputGroup>
                   </Col>
                 </FormGroup>
                 <FormGroup row>
@@ -264,15 +290,18 @@ const CalculatorPage = () => {
                     Total Interest
                   </Label>
                   <Col sm={8}>
-                    <Input
-                      id="totalInterestRes"
-                      name="totalInterestRes"
-                      placeholder="interest"
-                      type="text"
-                      disabled
-                      readOnly
-                      value={loanRes.totalInterestRes}
-                    />
+                    <InputGroup>
+                      <InputGroupText>₹</InputGroupText>
+                      <Input
+                        id="totalInterestRes"
+                        name="totalInterestRes"
+                        placeholder="interest"
+                        type="text"
+                        disabled
+                        readOnly
+                        value={currencyFormatter(loanRes.totalInterestRes)}
+                      />
+                    </InputGroup>
                   </Col>
                 </FormGroup>
               </Form>
