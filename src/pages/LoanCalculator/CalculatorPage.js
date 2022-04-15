@@ -98,6 +98,8 @@ const CalculatorPage = () => {
       setPaymentState(payments);
 
       console.log(noOfPayments);
+    }else{
+      setPaymentState([])
     }
   }, [loanInput]);
 
@@ -172,7 +174,7 @@ const CalculatorPage = () => {
                       id="tenure"
                       name="tenure"
                       type="range"
-                      min={1}
+                      min={0}
                       max={20}
                       step={1}
                       onChange={handleInputChange}
@@ -202,7 +204,7 @@ const CalculatorPage = () => {
                       id="interestRate"
                       name="interestRate"
                       type="range"
-                      min={1}
+                      min={0}
                       max={20}
                       step={0.1}
                       onChange={handleInputChange}
@@ -225,7 +227,7 @@ const CalculatorPage = () => {
                         onChange={handleInputChange}
                         value={loanInput.frequency}
                       />
-                      <InputGroupText>Months</InputGroupText>
+                      <InputGroupText>Month(s)</InputGroupText>
                     </InputGroup>
                   </Col>
                   <Col sm={4}>
@@ -268,7 +270,7 @@ const CalculatorPage = () => {
                 </FormGroup>
                 <FormGroup row>
                   <Label sm={4} label="Payback Rate" for="exampleRange4">
-                    Monthly Rate
+                    Payback Rate
                   </Label>
                   <Col sm={8}>
                     <InputGroup>
@@ -350,27 +352,6 @@ const CalculatorPage = () => {
                         </tr>
                       ))
                     : null}
-                  {/* <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@twitter</td>
-            </tr> */}
                 </tbody>
               </Table>
             </div>
