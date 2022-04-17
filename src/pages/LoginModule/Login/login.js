@@ -122,6 +122,7 @@ const Login = ({ isLoginOrRegistered }) => {
             //   console.log(payload, "payload");
             try {
                 let response = await instance.post(url, payload);
+                console.log(response)
                 if (response && response.headers.success) {
                     //   console.log(response.data, "response");
                     const custId = response.data.id;
@@ -138,27 +139,6 @@ const Login = ({ isLoginOrRegistered }) => {
                         return true;
                     });
                 }
-
-                let url;
-                url = (localStorage.getItem("role") == "customer") ? "/customer-login" : "/manager-login";
-
-                let payload = {
-                    password: credentials.password
-                };
-
-                if (credentials.emailOrPhone.includes(".com")) payload["email"] = credentials.emailOrPhone;
-                else payload["phone"] = credentials.emailOrPhone;
-
-                console.log(payload, "payload");
-                try {
-
-                    let response = await instance.post(url, payload);
-                    if (response && response.headers.success) setisLoggedIn(true);
-
-                } catch (e) {
-                    toast.info("Something is wrong.Please try again later.");
-                }
-
             } catch (e) {
                 toast.info("Something is wrong.Please try again later.");
             }
@@ -202,7 +182,6 @@ const Login = ({ isLoginOrRegistered }) => {
                 </div>
             </div>
         </Form>
-
     );
 };
 

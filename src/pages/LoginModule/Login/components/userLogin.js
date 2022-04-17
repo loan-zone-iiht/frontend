@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 
 import {
     Col,
@@ -21,6 +21,7 @@ import {
     ModalFooter,
     Alert
 } from "reactstrap";
+import Contact from "../../../AboutAndContact/Contactus";
 
 const options = [
     "Select Your Role",
@@ -38,11 +39,11 @@ const defaultOption = options[0];
 
 
 
-const UserLogin = ({forgotPasswordSelected,getUserCredentials}) => {
+const UserLogin = ({ forgotPasswordSelected, getUserCredentials }) => {
 
     const [roleDropdown, setroleDropdown] = useState(false);
     const [selectedRole, setSelectedRole] = useState(defaultOption);
- 
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -54,14 +55,14 @@ const UserLogin = ({forgotPasswordSelected,getUserCredentials}) => {
 
 
     return (
-        <div style={{marginTop:"20%"}}>
+        <div style={{ marginTop: "20%" }}>
             <h4 className="mb-2">
                 <div >
-                   Login
+                    Login
                 </div>
-               
+
             </h4>
-       
+
             <Row form>
                 <Col md={12}>
                     {/* First screen */}
@@ -99,7 +100,7 @@ const UserLogin = ({forgotPasswordSelected,getUserCredentials}) => {
                                             onClick={() => {
                                                 if (i != 0) {
                                                     setSelectedRole(option);
-                                                    localStorage.setItem("role",option)
+                                                    localStorage.setItem("role", option)
                                                 }
                                             }}
                                         >
@@ -156,7 +157,7 @@ const UserLogin = ({forgotPasswordSelected,getUserCredentials}) => {
                         {/* <Input type="password" name="password" id="examplePassword" placeholder="Password here..."/> */}
                         <a
                             // href="#"
-                            onClick={()=>forgotPasswordSelected(true)}
+                            onClick={() => forgotPasswordSelected(true)}
                             className="btn-sm btn btn-link normal_text forgot_password_remove_left_padding"
                         >
                             Forgot Password?
@@ -164,11 +165,8 @@ const UserLogin = ({forgotPasswordSelected,getUserCredentials}) => {
                     </FormGroup>
                 </Col>
             </Row>
-           
-
         </div>
     )
-
 }
 
 export default UserLogin;

@@ -7,45 +7,41 @@ const Navbar = () => {
 
 
     return (
-        <nav class="navbar navbar-expand bg-light navbar-dark fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand"  >LoanZone Dashboard</a>
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav">
+                <a class="navbar-brand" href="/apply">
+                    LoanZone
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link">Home</a>
+                            <a class="nav-link" aria-current="page" href="/home">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link">Features</a>
+                            <a class="nav-link" href="/calculator">Pricing Calculator</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" >Pricing</a>
+                            <a class="nav-link" href="/contact">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/about">About Us</a>
                         </li>
                     </ul>
-                </div>
-            </div>
-            <div className="menu-header-content text-left">
-                <div className="widget-content p-0">
-                    <div className="widget-content-wrapper">
-                        <div className="widget-content-left mr-3" >
-                            <Row>
-
-                                <Col>
-                                    {/* <img
-                                    width={42}
-                                    className="rounded-circle"
-                                    src="logo192.png"
-                                    alt=""
-                                /> */}
-
-                                </Col>
-                                <Col>
-                                    <p>Ashish</p>
-                                </Col>
-                            </Row>
-
-                        </div>
-                    </div>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Account
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/login">Logout</a>
+                                <div class="dropdown-divider"></div>
+                                {/* <a class="dropdown-item" href="">Go to Profile</a> */}
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>

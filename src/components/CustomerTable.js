@@ -31,7 +31,7 @@ const texts = [
 
 const CustomerTable = ({ customerState }) => {
 
-    const [responsedata,setresponseData] = useState({})
+    const [responsedata, setresponseData] = useState({})
     const [customerLoandetails, setcustomerLoandetails] = useState([])
     const [loanStatus, setloanStatus] = useState("");
     const [paymentModal, setpaymentModal] = useState(false)
@@ -54,7 +54,7 @@ const CustomerTable = ({ customerState }) => {
         let response = await instance.get(`/get-loandetails/${customerState.loanId}`)
         setcustomerLoandetails([response.data])
         setresponseData(response.data)
-        if (response.data.loanStatus == "FORECLOSURE_PENDING") setselectedPaymentOption("FORECLOSURE")
+        if (response.data.loanStatus == "FORECLOSURE_PENDING" || response.data.loanStatus == "FORECLOSURE_ACCEPTED") setselectedPaymentOption("FORECLOSURE")
         setloanStatus(response.data.loanStatus)
         setnoofPayments(response.data.noOfPayments)
         console.log(response);
@@ -167,8 +167,24 @@ const CustomerTable = ({ customerState }) => {
 
                                 <td>
 
-                                    {item.loanStatus != "PENDING" ? (
+                                    {item.loanStatus == "ACCEPTED" ? (
                                         <div>
+
+                                            <Button
+                                                onClick={() => { handlePayment(item.loanId, item.paymentAmount, item.loanStatus) }}
+                                                disabled={noofPayments == 0 ? "disabled" : ""}
+                                                color="success"
+                                                size="sm">Pay
+                                            </Button>
+                                            <Button
+                                                onClick={handleForeClosureApply}
+                                                color="success"
+                                                size="sm">Apply for Foreclosure
+                                            </Button>
+                                        </div>
+                                    ) : null}
+
+                                    {item.loanStatus == "FORECLOSURE_ACCEPTED" ? (
 
                                         <Button
                                             onClick={() => { handlePayment(item.loanId, item.paymentAmount, item.loanStatus) }}
@@ -176,12 +192,7 @@ const CustomerTable = ({ customerState }) => {
                                             color="success"
                                             size="sm">Pay
                                         </Button>
-                                        <Button
-                                            onClick={handleForeClosureApply}
-                                            color="success"
-                                            size="sm">Apply for Foreclosure
-                                        </Button>
-                                        </div>
+
                                     ) : null}
 
 
@@ -216,7 +227,7 @@ const CustomerTable = ({ customerState }) => {
                 <ModalBody>
 
 
-                    {loanStatus == "FORECLOSURE_PENDING" ? (
+                    {loanStatus == "FORECLOSURE_PENDING" || loanStatus == "FORECLOSURE_ACCEPTED" ? (
                         <div>
                             <Alert color="info" style={{ marginLeft: "10px" }}>You have applied for FORECLOSURE.</Alert>
                             {/* <Label style={{ marginLeft: "10px" }}>Select Payment Process</Label> */}
@@ -589,10 +600,10 @@ const CustomerTable = ({ customerState }) => {
                 </ModalHeader>
                 <ModalBody>
 
-                {responsedata && (
+                    {responsedata && (
 
-                <LoanDetails responsedata={responsedata}/>
-                )}
+                        <LoanDetails responsedata={responsedata} />
+                    )}
 
 
                 </ModalBody>
@@ -612,7 +623,7 @@ const CustomerTable = ({ customerState }) => {
                         color="primary"
                         size="sm"
                         onClick={() => setviewModal(prevModal => !prevModal)}
-                      
+
                     >
                         Done
                     </Button>

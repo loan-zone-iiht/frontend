@@ -45,10 +45,13 @@ const ApplicationFormBGV = () => {
                                 <a class="nav-link" aria-current="page" href="/apply">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/contact">Contact</a>
+                                <a class="nav-link" href="/calculator">Pricing Calculator</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" >Pricing Calculator</a>
+                                <a class="nav-link" href="/contact">Contact Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/contact">About Us</a>
                             </li>
                         </ul>
                         <ul class="navbar-nav mr-auto">
@@ -172,6 +175,13 @@ const ApplicationFormBGV = () => {
                                 min={"0"}
                             ></Input>
                         </FormGroup>
+                        <Button color="light"
+                            style={{ marginLeft: "5px" }}
+                            className="btn btn-md brand_background_color normal_text"
+                            type="button"
+                            href="/apply">
+                            <Label>Go back to the previous page</Label>
+                        </Button>
                         <Button color="primary"
                             style={{ marginLeft: "5px" }}
                             className="btn btn-md brand_background_color normal_text"
