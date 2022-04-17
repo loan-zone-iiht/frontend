@@ -100,19 +100,16 @@ const CalculatorPage = () => {
       console.log(noOfPayments);
     }else{
       setPaymentState([])
+      setLoanRes({
+        totalRes: "0",
+        paybackRes: "0",
+        totalInterestRes: "0",
+      })
     }
   }, [loanInput]);
 
   return (
-    <React.Fragment>
-      {/* {console.log(paymentState)} */}
-      <Container
-        style={{
-          padding: "10px",
-          //   outline: "5px 0px 5px 0px dotted green",
-          boxShadow: "-5px 0px 0px 0px black, 5px 0px 0px 0px black",
-        }}
-      >
+    <div style={{margin:"1% 4% 0 4%"}}>
         <div className="">
           <h2>Loan Calculator</h2>
           <hr />
@@ -357,8 +354,7 @@ const CalculatorPage = () => {
             </div>
           </div>
         </div>
-      </Container>
-    </React.Fragment>
+                    </div>
   );
 };
 
