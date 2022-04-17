@@ -28,7 +28,8 @@ const Tables = ({ loanDetails, allRecords,fetchLoanDetails }) => {
         setStatusModal(prevModal => !prevModal)
         console.log(loanStatus)
         if(loanStatus == "PENDING") setstatusUpdateOptions(['ACCEPTED','REJECTED'])
-        else if(loanStatus == "FORECLOSURE_PENDING") setstatusUpdateOptions(['FORECLOSURE_ACCEPTED','ACCEPTED'])
+        else if(loanStatus == "FORECLOSURE_PENDING") setstatusUpdateOptions(['FORECLOSURE_ACCEPTED','FORECLOSURE_REJECTED'])
+        // else if(loanStatus == "FORECLOSURE_PENDING") setstatusUpdateOptions(['FORECLOSURE_ACCEPTED','ACCEPTED'])
         
     }
     
@@ -162,7 +163,13 @@ const Tables = ({ loanDetails, allRecords,fetchLoanDetails }) => {
                                     {statusUpdateOptions.map((option, i) => (
                                         <DropdownItem
                                             key={i}
-                                            onClick={() => {setupdatedStatus(option) }}
+                                            onClick={() => {
+                                                if(option=="FORECLOSURE_REJECTED"){
+                                                    setupdatedStatus("ACCEPTED") 
+                                                }else{
+                                                    setupdatedStatus(option) 
+                                                }
+                                            }}
                                         >
                                             {option}
                                         </DropdownItem>

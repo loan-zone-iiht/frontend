@@ -612,10 +612,7 @@ const CustomerTable = ({ customerState }) => {
                         color="primary"
                         size="sm"
                         onClick={() => setviewModal(prevModal => !prevModal)}
-                        onClick={() => {
-                            setviewModal(prev => !prev)
-
-                        }}
+                      
                     >
                         Done
                     </Button>
