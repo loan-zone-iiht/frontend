@@ -5,6 +5,7 @@ import Dashboards from './pages/Dashboards';
 import ApplicationForm from './pages/ApplyForms/applicationForm';
 import Home from './pages/Home/home';
 import ApplicationFormBGV from './pages/ApplyForms/DocumentUpload';
+import CalculatorPage from './pages/LoanCalculator/CalculatorPage';
 
 
 const App = () => (
@@ -18,6 +19,11 @@ const App = () => (
       <Route path="/dashboards" element={<Dashboards />} />
       <Route path="/upload_file" element={<ApplicationFormBGV />} />
       <Route path="*" element={<Navigate to="/home" />} />
+      <Route path="/calculator" element={<CalculatorPage />} />
+      <Route
+        path="*"
+        element={<Navigate to="/login" />}
+      />
     </Routes>
   </BrowserRouter>
 )

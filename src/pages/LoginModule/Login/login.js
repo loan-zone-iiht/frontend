@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 import UserLogin from "./components/userLogin"
 import ForgotPasword from "./components/forgotPassword"
@@ -15,7 +15,7 @@ import {
     Button,
     Form,
 } from "reactstrap";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 const options = [
@@ -36,11 +36,25 @@ const defaultOption = options[0];
 const Login = ({ isLoginOrRegistered }) => {
 
     const [isForgotPassword, setisForgotPassword] = useState(false)
+    const [userObj, setUserObj] = useState({});
     const [isLoggedIn, setisLoggedIn] = useState(false)
     const [credentials, setCredentials] = useState({
         emailOrPhone: "",
         password: ""
     })
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            //   console.log(userObj, "userObj");
+            navigate("/dashboards", {
+                state: userObj,
+            });
+        }
+
+
+    }, [isLoggedIn])
+
+    const navigate = useNavigate();
 
     const forgotPasswordSelected = async (selected) => {
 
@@ -85,38 +99,71 @@ const Login = ({ isLoginOrRegistered }) => {
     }
 
     const handleLoginUsingPassword = async () => {
-
         if (validate()) {
-
             if (!localStorage.getItem("role")) {
                 toast.info("Please Select Role");
                 return;
             }
 
             let url;
-            url = (localStorage.getItem("role") == "customer") ? "/customer-login" : "/manager-login";
+            url =
+                localStorage.getItem("role") == "customer"
+                    ? "/customer-login"
+                    : "/manager-login";
 
             let payload = {
-                password: credentials.password
+                password: credentials.password,
             };
 
-            if (credentials.emailOrPhone.includes(".com")) payload["email"] = credentials.emailOrPhone;
+            if (credentials.emailOrPhone.includes(".com"))
+                payload["email"] = credentials.emailOrPhone;
             else payload["phone"] = credentials.emailOrPhone;
 
-            console.log(payload, "payload");
+            //   console.log(payload, "payload");
             try {
-
                 let response = await instance.post(url, payload);
-                if (response && response.headers.success) setisLoggedIn(true);
+                if (response && response.headers.success) {
+                    //   console.log(response.data, "response");
+                    const custId = response.data.id;
+                    let loanId = null;
+                    if (response.data.loanDetail && response.data.loanDetail.loanId) {
+                        loanId = response.data.loanDetail.loanId;
+                    }
+                    setisLoggedIn(() => {
+                        setUserObj({
+                            custId,
+                            loanId,
+                        });
+
+                        return true;
+                    });
+                }
+
+                let url;
+                url = (localStorage.getItem("role") == "customer") ? "/customer-login" : "/manager-login";
+
+                let payload = {
+                    password: credentials.password
+                };
+
+                if (credentials.emailOrPhone.includes(".com")) payload["email"] = credentials.emailOrPhone;
+                else payload["phone"] = credentials.emailOrPhone;
+
+                console.log(payload, "payload");
+                try {
+
+                    let response = await instance.post(url, payload);
+                    if (response && response.headers.success) setisLoggedIn(true);
+
+                } catch (e) {
+                    toast.info("Something is wrong.Please try again later.");
+                }
 
             } catch (e) {
                 toast.info("Something is wrong.Please try again later.");
             }
-
-
-
         }
-    }
+    };
 
     return (
         <Form  >
@@ -126,9 +173,9 @@ const Login = ({ isLoginOrRegistered }) => {
 
             <Row className="divider" />
             <div>
-                {isLoggedIn && (
+                {/* {isLoggedIn && (
                     <Navigate to="/dashboards" />
-                )}
+                )} */}
                 <div>
                     {!isForgotPassword ? (
                         <div>
