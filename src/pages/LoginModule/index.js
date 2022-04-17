@@ -32,29 +32,29 @@ const LoginModule = () => {
 
   return (
     <Fragment>
-    <ToastContainer />
-  
-    <div className="h-100 login">
-      <Row className="h-100 no-gutters">
-       
-        <Col
-          lg="7"
-          md="12"
-          className=" d-flex bg-white justify-content-center align-items-center"
-        >
-          <Col lg="9" sm="12" className="mx-auto app-login-box">
+      <ToastContainer />
 
-            
-            <Row className="divider" />
-            <div >
+      <div className="h-100 login">
+        <Row className="h-100 no-gutters">
+
+          <Col
+            lg="7"
+            md="12"
+            className=" d-flex bg-white justify-content-center align-items-center"
+          >
+            <Col lg="9" sm="12" className="mx-auto app-login-box">
+
+
+              <Row className="divider" />
+              <div >
                 {isLogin ? (
                   <Login isLoginOrRegistered={handleCreateAccountChange} />) : (<RegistrationForm />)}
               </div>
+            </Col>
           </Col>
-        </Col>
-      </Row>
-    </div>
-  </Fragment>
+        </Row>
+      </div>
+    </Fragment>
   );
 
 }

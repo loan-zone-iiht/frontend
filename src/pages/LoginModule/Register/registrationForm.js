@@ -123,13 +123,13 @@ const RegistrationForm = () => {
 
         if (validate()) {
 
-            if(!pan && localStorage.getItem("role")=="customer"){
+            if (!pan && localStorage.getItem("role") == "customer") {
                 toast.info("Please Enter Pan Number");
-                return ;
+                return;
             }
 
             let url;
-             url = (localStorage.getItem("role")=="customer") ? `/create-customer?panNo=${pan}`: "/manager-signup";
+            url = (localStorage.getItem("role") == "customer") ? `/create-customer?panNo=${pan}` : "/manager-signup";
 
             let response = await instance.post(url, user);
 
@@ -141,7 +141,7 @@ const RegistrationForm = () => {
                     phone: "",
                     password: ""
                 })
-                
+
 
             }
             else {
@@ -157,8 +157,8 @@ const RegistrationForm = () => {
         <div style={{ marginTop: "20%", width: "100%" }}>
 
             <Row form>
-                <Col md={12}>
-                   
+                <Col md={6}>
+
                     <FormGroup>
 
                         <h4 className="mb-2">
@@ -305,15 +305,16 @@ const RegistrationForm = () => {
 
             </Row>
 
+
             {selectedRole == "customer" && (
-                
+
                 <Row>
 
-                <Alert style ={{marginLeft:"10px"}} color="success">Please verify your Pan before Signup !</Alert>
+                    <Alert style={{ marginLeft: "10px" }} color="success">Please verify your Pan before Signup !</Alert>
                     <Col md={9}>
 
                         <FormGroup>
-                           
+
                             <Input
 
                                 id="pass"
@@ -333,8 +334,8 @@ const RegistrationForm = () => {
                         <FormGroup>
 
                             <Button
-                             
-                               
+
+
                                 color="success"
                                 className="btn btn-md brand_background_color normal_text ml-auto "
                                 onClick={verifyPan}
@@ -353,7 +354,7 @@ const RegistrationForm = () => {
             )}
 
             <Row>
-                <FormGroup style={{marginLeft :"10px"}} check className="ml-3">
+                <FormGroup style={{ marginLeft: "10px" }} check className="ml-3">
                     <Input
                         type="checkbox"
                         // value={this.agreeterms}
@@ -397,7 +398,7 @@ const RegistrationForm = () => {
 
 
                     <Button
-                       
+
                         color="primary"
                         className="btn btn-md brand_background_color normal_text ml-auto"
                         onClick={handleRegistration}

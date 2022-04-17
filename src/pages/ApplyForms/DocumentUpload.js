@@ -7,7 +7,8 @@ import {
     FormGroup,
     Label,
     Input,
-    Button
+    Button,
+    FormText
 
 } from "reactstrap";
 
@@ -17,7 +18,7 @@ import instance from "../../config/apiConfig";
 
 const API = process.env.REACT_APP_SERVER_URL;
 
-const ApplicationForm = () => {
+const ApplicationFormBGV = () => {
 
     const [customer, setCustomer] = useState({
         customer_name: "",
@@ -25,12 +26,8 @@ const ApplicationForm = () => {
         loan_amount: 0,
         loan_tenure: 0,
         loan_frequency: 0,
-        gender: ""
+        gender: "",
     })
-
-    const Toggle = () => {
-        const show = false
-    }
 
     return (
         <div>
@@ -56,13 +53,13 @@ const ApplicationForm = () => {
                         </ul>
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Account
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/login">Logout</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Go to Profile</a>
+                                    <a class="dropdown-item" href="">Go to Profile</a>
                                 </div>
                             </li>
                         </ul>
@@ -70,90 +67,93 @@ const ApplicationForm = () => {
                 </div>
             </nav>
             <div class="container mt-3">
-                <h3>Loan Application Form</h3><br />
+                <h3>Background Verification Form</h3><br />
                 <div className=" p-4 bg-light">
                     <Form>
                         <FormGroup>
-                            <Label>Applicant name</Label>
-                            <Input
-                                className=" form-control-alternative"
-                                name="customer_name"
-                                placeholder="Enter your name"
-                                type="text"
-                            ></Input>
+                            <Label for="User Photo">Applicant's Photo</Label>
+                            <Input type="file" name="file" id="exampleFile" />
+                            <FormText color="muted">
+                                (.png,.jpeg,.pdf etc)
+                            </FormText>
                         </FormGroup>
                         <Row>
                             <Col md="6">
                                 <FormGroup>
-                                    <Label>Applicant salary</Label>
-                                    <Input
-                                        className=" form-control-alternative"
-                                        name="customer_salary"
-                                        placeholder="Enter your monthly salary"
-                                        type="number"
-                                        min={"0"}
-                                    ></Input>
+
+                                    <Label for="Select">Select ID Type</Label>
+                                    <Input type="select" name="select" id="exampleSelect">
+                                        <option>VOTER Proof</option>
+                                        <option>AADHAR</option>
+                                        <option>Drving License</option>
+                                        <option>Other</option>
+                                    </Input>
                                 </FormGroup>
-                                this btn shld call "/get-cus-limit" to define max loan Amount; after the btn call slider will show up<br></br>
-                                <Button color="primary"
-                                    style={{ marginLeft: "5px" }}
-                                    className="btn btn-md brand_background_color normal_text"
-                                    type="submit"
-                                    onClick={Toggle.show = true}
-                                >
-                                    <Label>Get your Limt</Label>
-                                </Button>
+
                             </Col>
                             <Col md="6">
                                 <FormGroup>
-                                    {Toggle.show &&
-                                        <><Label>Loan Amount</Label><div class="rangeslider">
-                                            <input type="range" min="1" max="100" // Cu
-                                                class="myslider" name="loan_amount" />
-                                        </div></>
-                                    }
+                                    <Label for="User Photo">Attach Address Proof</Label>
+                                    <Input type="file" name="file" id="exampleFile" />
+                                    <FormText color="muted">
+                                        (.png,.jpeg,.pdf etc)
+                                    </FormText>
                                 </FormGroup>
                             </Col>
                         </Row>
                         <Row>
                             <Col md="6">
                                 <FormGroup>
-                                    <Label>Loan Tenure</Label>
-                                    <Input
-                                        className=" form-control-alternative"
-                                        name="loan_tenure"
-                                        placeholder="Enter your desired loan tenure in years"
-                                        type="number"
-                                        min={"0"}
-                                    ></Input>
+                                    <Label for="User Photo">Attach PAN card</Label>
+                                    <Input type="file" name="file" id="exampleFile" />
+                                    <FormText color="muted">
+                                        (.png,.jpeg,.pdf etc)
+                                    </FormText>
                                 </FormGroup>
                             </Col>
                             <Col md="6">
                                 <FormGroup>
-                                    <Label>Loan Frequency</Label>
-                                    <Input
-                                        className=" form-control-alternative"
-                                        name="loan_frequency"
-                                        placeholder="Enter your desired payback frequency per year"
-                                        type="number"
-                                        min={"0"}
-                                    ></Input>
+                                    <FormGroup>
+                                        <Label for="User Photo">Attach Bank Records</Label>
+                                        <Input type="file" name="file" id="exampleFile" />
+                                        <FormText color="muted">
+                                            Last 3 months Bank Statement
+                                        </FormText>
+                                    </FormGroup>
                                 </FormGroup>
                             </Col>
                         </Row>
                         <Row>
                             <Col md="6">
                                 <FormGroup>
-                                    <Label>Gender</Label>
+                                    <Label>Employment Status</Label>
                                     <Input
                                         type="select"
                                         className="form-control"
-                                        name="gender"
-                                        placeholder="Enter your gender">
+                                        name="Employment Status"
+                                    >
 
-                                        <option value="male"> Male
+                                        <option> Salaried
                                         </option>
-                                        <option value="female"> Female
+                                        <option > Self Employed
+                                        </option>
+                                        <option value="others"> Others
+                                        </option>
+                                    </Input>
+
+                                </FormGroup>
+                            </Col>
+                            <Col md="6">
+                                <FormGroup>
+                                    <Label>Employment Status</Label>
+                                    <Input
+                                        type="select"
+                                        className="form-control"
+                                        name="Employment Status"
+                                    >
+                                        <option> Salaried
+                                        </option>
+                                        <option > Self Employed
                                         </option>
                                         <option value="others"> Others
                                         </option>
@@ -162,17 +162,28 @@ const ApplicationForm = () => {
                                 </FormGroup>
                             </Col>
                         </Row>
+                        <FormGroup>
+                            <Label>Property Valuation</Label>
+                            <Input
+                                className="form-control"
+                                name=""
+                                placeholder="Type NA if not applicable"
+                                type="text"
+                                min={"0"}
+                            ></Input>
+                        </FormGroup>
                         <Button color="primary"
                             style={{ marginLeft: "5px" }}
                             className="btn btn-md brand_background_color normal_text"
-                            type="submit" >
-                            <Label>Proceed to Document Verification</Label>
+                            type="submit">
+                            <Label>Submit</Label>
                         </Button>
                     </Form>
                 </div>
             </div>
         </div>
     );
+
 }
 
-export default ApplicationForm;
+export default ApplicationFormBGV;
