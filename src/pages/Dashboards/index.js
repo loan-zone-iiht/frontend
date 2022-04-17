@@ -7,16 +7,33 @@ import Tables from "../../components/Tables";
 import instance from "../../config/apiConfig";
 import { useLocation } from "react-router-dom";
 
+import CustomerTable from "../../components/CustomerTable"
 
-const Dashboards = () => {
+
+const Dashboards = (props) => {
 
     const [loandetails, setLoanDetails] = useState([])
     const location = useLocation();
+
+
+    useEffect(() => {
+        fetchDetails();
+
+    }, [])
+
+    useEffect(()=>{
+        const userState = location.state;
+        
+    },[])
+
     const fetchDetails = () => {
         if (localStorage.getItem("role") == "manager") {
             fetchLoanDetails();
         }
-
+        // else {
+        //     fetchSingleLoanDetail()
+        // }
+        
     }
 
     const fetchLoanDetails = async () => {
@@ -25,15 +42,8 @@ const Dashboards = () => {
         setLoanDetails(response.data);
     }
 
-    useEffect(()=>{
-        const userState = location.state;
-        console.log(userState);
-    },[location])
 
-    useEffect(() => {
-        fetchDetails();
-    }, [])
-
+  
 
 
     return (
@@ -58,10 +68,19 @@ const Dashboards = () => {
             ) : (
                 <div className="container mt-3">
                     {/* //First <h1> tag is hidden for both the roles */}
-                    
+                  {location.state.loanId!=null? (
+                      <div>
+
                     <h1>Loan Details - Customer</h1> 
-                    <h3>Start here Ashish</h3>
-                    <br></br>
+                    <CustomerTable customerState={location.state} />
+                    </div>
+                  ):(
+                      <div>
+                        <h1>Customer Loan Details</h1>
+                        <h2>Loan Ne</h2>
+                        </div>
+                  )}  
+                                     
                 
                 </div>
             )}
