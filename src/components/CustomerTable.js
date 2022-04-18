@@ -6,7 +6,8 @@ import {
     Row, Col, Alert, Table, Button, Modal, ModalHeader, ModalBody, ModalFooter,
     FormGroup, UncontrolledButtonDropdown, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label,
     Input,
-    Form
+    Form,
+    Card, CardImg, CardImgOverlay, CardTitle, CardText,
 } from "reactstrap";
 
 import instance from "../config/apiConfig";
@@ -45,6 +46,8 @@ const CustomerTable = ({ customerState }) => {
     const [selectedpaymentOption, setselectedPaymentOption] = useState(null)
     const [noofPayments, setnoofPayments] = useState(1)
     const [selectednoofPayments, setselectednoofPayments] = useState(0);
+    const [paymenthistoryModal, setpaymenthistoryModal] = useState(false);
+    const [paymenthistory, setpaymentHistory] = useState([]);
 
     useEffect(() => {
         fetchSingleLoanDetail();
@@ -52,12 +55,13 @@ const CustomerTable = ({ customerState }) => {
 
     const fetchSingleLoanDetail = async () => {
         let response = await instance.get(`/get-loandetails/${customerState.loanId}`)
-        setcustomerLoandetails([response.data])
+        setcustomerLoandetails(response.data)
         setresponseData(response.data)
+        // console.log(response.data, "lao")
         if (response.data.loanStatus == "FORECLOSURE_PENDING" || response.data.loanStatus == "FORECLOSURE_ACCEPTED") setselectedPaymentOption("FORECLOSURE")
         setloanStatus(response.data.loanStatus)
         setnoofPayments(response.data.noOfPayments)
-        console.log(response);
+        // console.log(response);
     }
 
     const handlePayment = (loanId, amount, status) => {
@@ -131,9 +135,31 @@ const CustomerTable = ({ customerState }) => {
 
     }
 
+    const handlePaymentTransactions = async () => {
+
+        setpaymenthistoryModal(true)
+
+        let response = await instance.get(`/list-payment-history-by-cust-id?custId=${localStorage.getItem("custId")}`)
+        console.log(response)
+        if (response.headers.success) {
+
+
+            setpaymentHistory(response.data)
+           
+        }
+
+        // setCount(count + 1, () => {
+        //     afterSetCountFinished();
+        //  });
+
+
+        // setpaymenthistoryModal(prevModal => !prevModal)
+
+    }
+
     return (
         <div>
-            <Table striped>
+            {/* <Table striped>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -207,7 +233,206 @@ const CustomerTable = ({ customerState }) => {
                         )
                     })}
                 </tbody>
-            </Table>
+            </Table> */}
+
+            <Card className="bg-dark text-white">
+                <CardImg src="https://www.bankofbaroda.in/-/media/project/bob/countrywebsites/india/blogs/loansborrowings/images/different-types-of-loans-for-your-home.jpg" alt="Card image" />
+                <CardImgOverlay>
+                    <CardTitle><h1>Customer Loan Details</h1></CardTitle>
+                    <CardText>
+
+                        <Row>
+                            <Col md={6}>
+
+                                <Button
+                                    style={{ marginBottom: "1%" }}
+                                    onClick={() => { setviewModal(prevModal => !prevModal) }}
+                                    color="primary"
+                                    size="md">View All Details
+                                </Button>
+                                <h4>Loan Status</h4>
+                                <Button disabled color="primary" size="lg">
+                                    {customerLoandetails.loanStatus}
+                                </Button>
+                            </Col>
+
+                            <Col md={6}>
+                                <h4>Actions</h4>
+
+                                {customerLoandetails.loanStatus == "ACCEPTED" ? (
+                                    <div>
+
+                                        <Button
+                                            style={{ margin: "0 2%" }}
+                                            onClick={() => { handlePayment(customerLoandetails.loanId, customerLoandetails.paymentAmount, customerLoandetails.loanStatus) }}
+                                            disabled={noofPayments == 0 ? "disabled" : ""}
+                                            color="success"
+                                            size="md">Pay
+                                        </Button>
+                                        <Button
+                                            style={{ margin: "0 2%" }}
+
+                                            onClick={handleForeClosureApply}
+                                            color="success"
+                                            size="md">Apply for Foreclosure
+                                        </Button>
+
+                                        <Button
+                                            style={{ margin: "0 2%" }}
+                                            onClick={handlePaymentTransactions}
+
+                                            disabled={noofPayments == 0 ? "disabled" : ""}
+                                            color="success"
+                                            size="md">Payment Details
+                                        </Button>
+                                    </div>
+                                ) : null}
+
+                                {customerLoandetails.loanStatus == "FORECLOSURE_ACCEPTED" ? (
+
+                                    <Button
+                                        style={{ margin: "0 2%" }}
+                                        onClick={() => { handlePayment(customerLoandetails.loanId, customerLoandetails.paymentAmount, customerLoandetails.loanStatus) }}
+                                        disabled={noofPayments == 0 ? "disabled" : ""}
+                                        color="success"
+                                        size="md">Pay
+                                    </Button>
+
+
+                                ) : null}
+
+
+
+
+
+
+                            </Col>
+                        </Row>
+
+
+
+
+                        <Row>
+
+                            <Col md={6}>
+
+                                <FormGroup>
+                                    <Label for="exampleEmail">
+                                        Application Date
+                                    </Label>
+                                    <Input
+                                        disabled
+                                        id="exampleEmail"
+                                        name="email"
+                                        placeholder={customerLoandetails.applicationDate}
+                                        type="email"
+                                    />
+                                </FormGroup>
+
+                            </Col>
+                            <Col md={6}>
+
+                                <FormGroup>
+                                    <Label for="exampleEmail">
+                                        Loan Principal
+                                    </Label>
+                                    <Input
+                                        disabled
+                                        id="exampleEmail"
+                                        name="email"
+                                        placeholder={customerLoandetails.loanPrincipal}
+                                        type="email"
+                                    />
+                                </FormGroup>
+
+                            </Col>
+                        </Row>
+
+                        <Row>
+
+                            <Col md={6}>
+
+                                <FormGroup>
+                                    <Label for="exampleEmail">
+                                        Loan Frequency
+                                    </Label>
+                                    <Input
+                                        disabled
+                                        id="exampleEmail"
+                                        name="email"
+                                        placeholder={customerLoandetails.loanFrequency}
+                                        type="email"
+                                    />
+                                </FormGroup>
+
+                            </Col>
+                            <Col md={6}>
+
+                                <FormGroup>
+                                    <Label for="exampleEmail">
+                                        Loan Interest Rate
+                                    </Label>
+                                    <Input
+                                        disabled
+                                        id="exampleEmail"
+                                        name="email"
+                                        placeholder={customerLoandetails.loanInterestRate}
+                                        type="email"
+                                    />
+                                </FormGroup>
+
+                            </Col>
+                        </Row>
+
+
+                        <Row>
+
+                            <Col md={6}>
+
+                                <FormGroup>
+                                    <Label for="exampleEmail">
+                                        Loan Tenure
+                                    </Label>
+                                    <Input
+                                        disabled
+                                        id="exampleEmail"
+                                        name="email"
+                                        placeholder={customerLoandetails.loanTenure}
+                                        type="email"
+                                    />
+                                </FormGroup>
+
+                            </Col>
+                            <Col md={6}>
+
+                                <FormGroup>
+                                    <Label for="exampleEmail">
+                                        Paymnent Amount
+                                    </Label>
+                                    <Input
+                                        style={{ backgroundColor: "white" }}
+                                        disabled
+                                        id="exampleEmail"
+                                        name="email"
+                                        placeholder={customerLoandetails.paymentAmount}
+                                        type="email"
+                                    />
+                                </FormGroup>
+
+                            </Col>
+                        </Row>
+
+
+
+                        <h5>{"Number of payments: " + customerLoandetails.noOfPayments}</h5>
+
+
+                    </CardText>
+                    <CardText>
+
+                    </CardText>
+                </CardImgOverlay>
+            </Card>
 
             {/* payment Modal */}
             <Modal
@@ -623,6 +848,82 @@ const CustomerTable = ({ customerState }) => {
                         color="primary"
                         size="sm"
                         onClick={() => setviewModal(prevModal => !prevModal)}
+
+                    >
+                        Done
+                    </Button>
+                </ModalFooter>
+            </Modal>
+
+            {/* payment History Modal */}
+            <Modal
+                fullscreen={true}
+                isOpen={paymenthistoryModal}
+                toggle={() => setpaymenthistoryModal(prevModal => !prevModal)}
+
+                backdrop={true}
+            >
+                <ModalHeader
+                    toggle={() => setpaymenthistoryModal(prevModal => !prevModal)}
+
+                >
+
+                    Payment History
+                </ModalHeader>
+                <ModalBody>
+
+                   
+                        <Table striped>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Payment Date</th>
+                                    <th>Payment From</th>
+                                    <th>Amount</th>
+                                    <th>Payment Type</th>
+                                    <th>Status</th>
+                                   
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paymenthistory && paymenthistory.length > 0 && paymenthistory.map((item, i) => {
+                                    return (
+                                        <tr key={i}  >
+                                            <td>{i + 1 + "."}</td>
+                                            <td>{item.paymentDate}</td>
+                                            <td>{item.paymentFrom}</td>
+                                            <td>{item.paymentAmount}</td>
+                                            <td>{item.paymentType}</td>
+                                            <td>{item.successType}</td>
+                                           
+
+                                        </tr>
+
+                                    )
+                                })}
+                            </tbody>
+                        </Table>
+                    
+
+
+                </ModalBody>
+                <ModalFooter>
+                    <Button
+                        color="link"
+                        onClick={() => {
+                            setpaymenthistoryModal(prev => !prev)
+
+                        }}
+                        size="sm"
+
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        color="primary"
+                        size="sm"
+                        onClick={() => setpaymenthistoryModal(prevModal => !prevModal)}
 
                     >
                         Done

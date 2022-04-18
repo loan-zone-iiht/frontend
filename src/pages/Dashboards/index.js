@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Table } from "reactstrap";
+import { Row, Col, Table, Card, CardBody, CardImg,Badge, CardImgOverlay, CardTitle, CardText, Button } from "reactstrap";
 
 import Navbar from "../../Layout/Navbar";
 import Tables from "../../components/Tables";
 
 import instance from "../../config/apiConfig";
-import { useLocation } from "react-router-dom";
+import { useLocation,Link } from "react-router-dom";
 
 import CustomerTable from "../../components/CustomerTable"
 import ApplicationForm from "../ApplyForms/applicationForm";
+// import { Button } from "bootstrap";
 
 
 const Dashboards = (props) => {
@@ -24,6 +25,11 @@ const Dashboards = (props) => {
 
     useEffect(() => {
         const userState = location.state;
+        if(location.state.custId){
+
+            localStorage.setItem("custId",location.state.custId)
+        }
+        console.log(userState)
 
     }, [])
 
@@ -79,13 +85,36 @@ const Dashboards = (props) => {
                     {location.state.loanId != null ? (
                         <div>
 
-                            <h1>Loan Details - Customer</h1>
+                            <h3>Loan Details - Customer</h3>
                             <CustomerTable customerState={location.state} />
+                            
+
+                             
                         </div>
                     ) : (
-                        <div>
-                            <h1>Customer Loan Details</h1>
-                            <h2><ApplicationForm /></h2>
+                        <div >
+
+                            <Card className="bg-dark text-white">
+                                <CardImg src="https://www.bankofbaroda.in/-/media/project/bob/countrywebsites/india/blogs/loansborrowings/images/different-types-of-loans-for-your-home.jpg" alt="Card image" />
+                                <CardImgOverlay>
+                                    <CardTitle><h1>Customer Loan Details - No Ongoing Loans</h1></CardTitle>
+                                    <CardText>
+                                        <h4 >Apply for a Loan Now!
+                                        <Badge style={{marginLeft:"2%"}} color="warning">
+                                            New
+                                        </Badge>
+                                            </h4> </CardText>
+                                    <CardText>
+                                    <Link to= {`/apply/${location.state.custId}`}>
+
+                                        <Button style={{ float: "right" }} size="lg" color="success">Take me to the Application Form -></Button>
+                                    </Link>
+                                    </CardText>
+                                </CardImgOverlay>
+                            </Card>
+
+
+                            {/* <h2><ApplicationForm /></h2> */}
                         </div>
                     )}
                 </div>

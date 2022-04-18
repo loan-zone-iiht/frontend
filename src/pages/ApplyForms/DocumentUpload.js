@@ -31,47 +31,10 @@ const ApplicationFormBGV = () => {
 
     return (
         <div>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/apply">
-                        LoanZone
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="/apply">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/calculator">Pricing Calculator</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/contact">Contact Us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/contact">About Us</a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Account
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/login">Logout</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="">Go to Profile</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div class="container mt-3">
-                <h3>Background Verification Form</h3><br />
-                <div className=" p-4 bg-light">
+            
+            <div >
+                <h3>Background Verification :</h3><br />
+                <div className=" bg-light">
                     <Form>
                         <FormGroup>
                             <Label for="User Photo">Applicant's Photo</Label>
@@ -175,19 +138,8 @@ const ApplicationFormBGV = () => {
                                 min={"0"}
                             ></Input>
                         </FormGroup>
-                        <Button color="light"
-                            style={{ marginLeft: "5px" }}
-                            className="btn btn-md brand_background_color normal_text"
-                            type="button"
-                            href="/apply">
-                            <Label>Go back to the previous page</Label>
-                        </Button>
-                        <Button color="primary"
-                            style={{ marginLeft: "5px" }}
-                            className="btn btn-md brand_background_color normal_text"
-                            type="submit">
-                            <Label>Submit</Label>
-                        </Button>
+                       
+                      
                     </Form>
                 </div>
             </div>
