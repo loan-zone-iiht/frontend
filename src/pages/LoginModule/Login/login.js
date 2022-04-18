@@ -177,8 +177,6 @@ const Login = ({ isLoginOrRegistered }) => {
                             </Button>
                         </div>
                     ) : null}
-
-
                 </div>
             </div>
         </Form>

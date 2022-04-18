@@ -15,9 +15,9 @@ import {
 
 } from "reactstrap";
 
-import bg1 from "./../../assets/p12.png";
-import bg2 from "./../../assets/p11.png";
-import bg3 from "./../../assets/p13.png";
+import ashish from "./../../assets/ashish.jpg";
+import sayak from "./../../assets/Sayak.jpeg";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import instance from "../../config/apiConfig";
@@ -102,7 +102,7 @@ const AboutUs = () => {
             </CardFooter>
           </Card>
           <Card>
-            <CardImg variant="top" src="https://lh3.googleusercontent.com/T7lUr0bDzJOhrZZSR1eiBVZefKUiCrOrg74OmzvS37K9Kpa_l8RQgyoamzv37mz7cnfU2Qqa-SLC332PqmYyRkSar5EDd85QYyk6gGjUtvuo5BgsUHPOeBEzGa_e9WDw3qvL7KJ2Gn3TcNBxhpe7DwWi-eVR7OqBPstBFS1CaDsJZAtzA-_mW-9aAsIsxvx7Q30MmoQPWayQ5FTuK6NKHS49ds0LVJxRZytCb2nS8yBl6TAPvDwPmRQF4ErF2idbOeM__W-Tx01uo94QuMYj0NaBcXmaFryGtz9c0HFw58Tu-GeeTp-Yj2krCerVPw625Jg_DEVA1X_8N7Pquulcv8xDDFXwWRxMaTAgU-HxHkzKoAfAWSzWHIQz9RuIJMvSpMSc55LbhF45lPNq_TNCWuCeh08-TOu07GEAnpxbHDtFCJSf2TgmClpMBE27ikN5Vxh7lzGmDaUZzpgim7J-FhI-0c_AehHMrC-Z0EDZ9Sl34gV51azPrREWj4HTg3BrK3aoxTLaC86fQteYbTfHM7IeZia57bO5NAIW-9_AiOjMqCaMhQdF7VQtbv4BXqhr3ybRKrALGLkj5ETBXxMRgW64BJ3-t2eNNFMAeWZu6nRrUxtIpen2rtFkxmyQBi9j0ezg97Ok_51Q62WrLJ-T9UOMqtEKGaaR8St54pjb_m8qOVmw84ddH3w4MmuFC72V--ynEc_xC2auBVJ1CLXHiwOy7NKXK2b1qnDFqjeFb73vIoU3QowuSeLcW31E=s720-no?authuser=0" />
+            <CardImg variant="top" src="sayak" />
             <CardBody>
               <CardTitle><h4>Sayak Mukherjee</h4></CardTitle>
               <CardText>
@@ -115,7 +115,7 @@ const AboutUs = () => {
             </CardFooter>
           </Card>
           <Card>
-            <CardImg variant="top" src="https://lh3.googleusercontent.com/5GZYq8xQNAUF0gL8aG49Ye0-HN4_g4evt1Hwid1iqCT3DiRtFK5YWarj_lZRATFRwfwj720S8P6_CD4GPdrklUfpz-owl_bLXlOfPg04h8HJGiT_NTchr646HeaDhXl2lk76dUkpR4mnSgpTNB4kTBAwMDEoNXYwqGCZmNj3e-s3jOa4j4QHpBsTokrUutb-neZKqgZQOHQnH5JUYPdSVGpbQIgzLtQTbOErp92XWlZk-GZtPwr64nNaWAI95LCBvuqo3cZRbZ_PD6IQeZZ1TIPFkZDBt_oWFBGKU2TII-n6_c8M0ThDeY8Bi02PoK1UjIvH3n1S13j-FwQdTSCW5hOX9zfPFeeibNNUqGtnbMaFZsf11tys08TcR_YShYgeTvHRxblenfSRMPxZNW66nzmPqDb6fBKX6DJQXMXJxiOm3lawnUttIzaLXZYfeY2cfo26lowf6lXexR4yfIl2GToFmCCyMF5BrTJRjI4OaXACMU45j8KkNNR9Hm7Y03unIledBR3hGqbwurO4deUrJaECb7Y2GLn9OVrMCQWJQLDs1kUeuh-ZCRHtlneSCwrQK7gyf08YOCXZVWkdYoVf92zYXEVQmHUCAWU3zuxjkp7RjXIo7sibKoXGq6_fM-aDZcsIyRFjD6YCJC9llcRVjF6cGlm9QP56RX2KBYlMvww-rxHmgQT6Az6Skg731n_IcNUFVlOJmuNn8IwiOZ6lUEE_WdDtkfNH4K86aNT5JqE37xYxsLU2BINwvto-=s934-no?authuser=0" />
+            <CardImg variant="top" src="https://photos.google.com/photo/AF1QipMm1TgiI3QcVsdoRyn3uVa63jGDTAYrlrGaUpIt" />
             <CardBody>
               <CardTitle><h4>Ashish Gupta</h4></CardTitle>
               <CardText>

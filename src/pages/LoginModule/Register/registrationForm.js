@@ -410,7 +410,6 @@ const RegistrationForm = () => {
             </Row>
         </div>
     )
-
 }
 
 export default RegistrationForm;

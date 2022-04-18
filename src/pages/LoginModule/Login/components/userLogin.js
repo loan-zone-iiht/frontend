@@ -23,6 +23,7 @@ import {
 } from "reactstrap";
 import Contact from "../../../AboutAndContact/Contactus";
 
+
 const options = [
     "Select Your Role",
     "manager",
@@ -53,16 +54,21 @@ const UserLogin = ({ forgotPasswordSelected, getUserCredentials }) => {
 
     };
 
+    const toggleForm = () => {
+        const container = document.querySelector('.container');
+        container.classList.toggle('active');
+    };
+
 
     return (
         <div style={{ marginTop: "20%" }}>
+
             <h4 className="mb-2">
                 <div >
                     Login
                 </div>
 
             </h4>
-
             <Row form>
                 <Col md={12}>
                     {/* First screen */}

@@ -56,7 +56,7 @@ const Home = () => {
 
                 <UncontrolledCarousel items={items} slide={false} /><br />
 
-                <div class="container mt-2" id="faq">
+                <div class="container mt-2">
                     <hr />
                     <Row>
                         <Col md="6" >
