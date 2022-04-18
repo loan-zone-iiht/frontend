@@ -26,7 +26,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import instance from "../../../config/apiConfig";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const API = process.env.REACT_APP_SERVER_URL;
 
@@ -406,6 +406,17 @@ const RegistrationForm = () => {
                         {" "}
                         Signup
                     </Button>
+                    <Link to="/home">
+                        <Button
+                            color="primary"
+                            style={{ marginLeft: "5px" }}
+                            className="btn btn-md brand_background_color normal_text"
+
+                        >
+                            {" "}
+                            Home Page
+                        </Button>
+                    </Link>
                 </Col>
             </Row>
         </div>

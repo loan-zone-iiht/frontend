@@ -8,6 +8,7 @@
     overflow: auto;
 }
 
-.footnote {
-    text-align: justify;
+#footnote {
+    text-align: center;
+    background-color: blanchedalmond;
 }

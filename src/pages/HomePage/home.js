@@ -5,8 +5,8 @@ import { Carousel, Col, Row, UncontrolledCarousel } from "reactstrap";
 import "./home.css";
 
 import { toast, Bounce, ToastContainer } from "react-toastify";
-import bg1 from "./../../assets/p12.png";
-import bg2 from "./../../assets/p11.png";
+import bg1 from "./../../assets/4.jpg";
+import bg2 from "./../../assets/5.jpg";
 import bg3 from "./../../assets/p13.png";
 
 
@@ -35,9 +35,9 @@ const Home = () => {
         <div >
             <Fragment>
                 <ToastContainer />
-                <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="/home">LoanZone</a>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" >
+                    <div class="container-fluid" id="nav">
+                        <a class="navbar-brand"><h3>LoanZone</h3></a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -45,6 +45,11 @@ const Home = () => {
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
                                     <a class="nav-link" href="/login">Login / Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/calculator">
+                                        Pricing Calculator
+                                    </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/about">About Us</a>
@@ -111,8 +116,8 @@ const Home = () => {
                     </p>
                 </div>
                 <hr />
-                <div class="container-fluid" id="footnote" text-align="justify">
-                    <p text-align="justify">Copyright © 2022 LoanZone. <br />
+                <div id="footnote">
+                    <p>Copyright © 2022 LoanZone. <br />
                         Site best viewed in IE10+, Firefox 47+, Chrome 55+, Safari 5.0+ at 1920 X 1080 pixels resolution.<br />
 
                     </p>

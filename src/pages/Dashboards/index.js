@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Table, Card, CardBody, CardImg,Badge, CardImgOverlay, CardTitle, CardText, Button } from "reactstrap";
+import { Row, Col, Table, Card, CardBody, CardImg, Badge, CardImgOverlay, CardTitle, CardText, Button } from "reactstrap";
 
 import Navbar from "../../Layout/Navbar";
 import Tables from "../../components/Tables";
 
 import instance from "../../config/apiConfig";
-import { useLocation,Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 import CustomerTable from "../../components/CustomerTable"
 import ApplicationForm from "../ApplyForms/applicationForm";
@@ -25,9 +25,9 @@ const Dashboards = (props) => {
 
     useEffect(() => {
         const userState = location.state;
-        if(location.state.custId){
+        if (location.state.custId) {
 
-            localStorage.setItem("custId",location.state.custId)
+            localStorage.setItem("custId", location.state.custId)
         }
         console.log(userState)
 
@@ -61,8 +61,10 @@ const Dashboards = (props) => {
             {localStorage.getItem("role") == "manager" ? (
 
                 <div className="container mt-3">
+                    <br />
+                    <br />
                     {/* //First <h1> tag is hidden for both the roles */}
-                    <h1>Loan Details -- Manager</h1>
+                    <h1>Loan Details - Manager</h1>
                     <h3>Pending Loan Details</h3>
                     <br></br>
                     <Tables fetchLoanDetails={fetchLoanDetails} allRecords={true} loanDetails={loandetails} />
@@ -87,28 +89,30 @@ const Dashboards = (props) => {
 
                             <h3>Loan Details - Customer</h3>
                             <CustomerTable customerState={location.state} />
-                            
 
-                             
+
+
                         </div>
                     ) : (
                         <div >
 
-                            <Card className="bg-dark text-white">
-                                <CardImg src="https://www.bankofbaroda.in/-/media/project/bob/countrywebsites/india/blogs/loansborrowings/images/different-types-of-loans-for-your-home.jpg" alt="Card image" />
+                            <Card className="bg-dark text-white" style={{
+                                marginTop: "5%"
+                            }}>
+                                <CardImg src="https://i.ibb.co/mNn7xg7/mitchell-luo-e-J5-1-FEXe1-I-unsplash.jpg" alt="Card image" />
                                 <CardImgOverlay>
                                     <CardTitle><h1>Customer Loan Details - No Ongoing Loans</h1></CardTitle>
                                     <CardText>
                                         <h4 >Apply for a Loan Now!
-                                        <Badge style={{marginLeft:"2%"}} color="warning">
-                                            New
-                                        </Badge>
-                                            </h4> </CardText>
+                                            <Badge style={{ marginLeft: "2%" }} color="warning">
+                                                New
+                                            </Badge>
+                                        </h4> </CardText>
                                     <CardText>
-                                    <Link to= {`/apply/${location.state.custId}`}>
+                                        <Link to={`/apply/${location.state.custId}`}>
 
-                                        <Button style={{ float: "right" }} size="lg" color="success">Take me to the Application Form -></Button>
-                                    </Link>
+                                            <Button style={{ float: "right" }} size="lg" color="success">Take me to the Application Form -></Button>
+                                        </Link>
                                     </CardText>
                                 </CardImgOverlay>
                             </Card>

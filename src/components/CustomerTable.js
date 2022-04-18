@@ -145,98 +145,16 @@ const CustomerTable = ({ customerState }) => {
 
 
             setpaymentHistory(response.data)
-           
+
         }
-
-        // setCount(count + 1, () => {
-        //     afterSetCountFinished();
-        //  });
-
-
-        // setpaymenthistoryModal(prevModal => !prevModal)
 
     }
 
     return (
         <div>
-            {/* <Table striped>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Application Date</th>
-                        <th>Principal</th>
-                        <th>Loan Frequency</th>
-                        <th>ROI</th>
-                        <th>Tenure</th>
-                        <th>Amount</th>
-                        <td>No.of Payments</td>
-                        <td>Status</td>
-                        <th>Actions</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    {customerState && customerLoandetails.length > 0 && customerLoandetails.map((item, i) => {
-                        return (
-                            <tr key={i}  >
-                                <td>{i + 1 + "."}</td>
-                                <td>{item.applicationDate}</td>
-                                <td>{item.loanPrincipal}</td>
-                                <td>{item.loanFrequency}</td>
-                                <td>{item.loanInterestRate}%</td>
-                                <td>{item.loanTenure}</td>
-                                <td>{item.paymentAmount}</td>
-                                <td>{item.noOfPayments}</td>
-                                <td>{item.loanStatus}</td>
-
-
-
-                                <td>
-
-                                    {item.loanStatus == "ACCEPTED" ? (
-                                        <div>
-
-                                            <Button
-                                                onClick={() => { handlePayment(item.loanId, item.paymentAmount, item.loanStatus) }}
-                                                disabled={noofPayments == 0 ? "disabled" : ""}
-                                                color="success"
-                                                size="sm">Pay
-                                            </Button>
-                                            <Button
-                                                onClick={handleForeClosureApply}
-                                                color="success"
-                                                size="sm">Apply for Foreclosure
-                                            </Button>
-                                        </div>
-                                    ) : null}
-
-                                    {item.loanStatus == "FORECLOSURE_ACCEPTED" ? (
-
-                                        <Button
-                                            onClick={() => { handlePayment(item.loanId, item.paymentAmount, item.loanStatus) }}
-                                            disabled={noofPayments == 0 ? "disabled" : ""}
-                                            color="success"
-                                            size="sm">Pay
-                                        </Button>
-
-                                    ) : null}
-
-
-                                    <Button style={{ marginLeft: "6px" }}
-                                        onClick={() => { setviewModal(prevModal => !prevModal) }}
-                                        color="primary"
-                                        size="sm">View
-                                    </Button>
-                                </td>
-                            </tr>
-
-                        )
-                    })}
-                </tbody>
-            </Table> */}
 
             <Card className="bg-dark text-white">
-                <CardImg src="https://www.bankofbaroda.in/-/media/project/bob/countrywebsites/india/blogs/loansborrowings/images/different-types-of-loans-for-your-home.jpg" alt="Card image" />
+                <CardImg src="https://i.ibb.co/2Z4bHgN/valentina-locatelli-P8bsrm8-Kb-M0-unsplash.jpg" alt="Card image" height="60%" />
                 <CardImgOverlay>
                     <CardTitle><h1>Customer Loan Details</h1></CardTitle>
                     <CardText>
@@ -251,7 +169,7 @@ const CustomerTable = ({ customerState }) => {
                                     size="md">View All Details
                                 </Button>
                                 <h4>Loan Status</h4>
-                                <Button disabled color="primary" size="lg">
+                                <Button disabled color="secondary" size="lg">
                                     {customerLoandetails.loanStatus}
                                 </Button>
                             </Col>
@@ -287,7 +205,19 @@ const CustomerTable = ({ customerState }) => {
                                         </Button>
                                     </div>
                                 ) : null}
+                                {customerLoandetails.loanStatus == "COMPLETED" ? (
+                                    <div>
 
+
+                                        <Button
+                                            style={{ margin: "0 2%" }}
+                                            onClick={handlePaymentTransactions}
+
+                                            color="success"
+                                            size="md">Payment Details
+                                        </Button>
+                                    </div>
+                                ) : null}
                                 {customerLoandetails.loanStatus == "FORECLOSURE_ACCEPTED" ? (
 
                                     <Button
@@ -300,22 +230,10 @@ const CustomerTable = ({ customerState }) => {
 
 
                                 ) : null}
-
-
-
-
-
-
                             </Col>
                         </Row>
-
-
-
-
                         <Row>
-
                             <Col md={6}>
-
                                 <FormGroup>
                                     <Label for="exampleEmail">
                                         Application Date
@@ -872,39 +790,41 @@ const CustomerTable = ({ customerState }) => {
                 </ModalHeader>
                 <ModalBody>
 
-                   
-                        <Table striped>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Payment Date</th>
-                                    <th>Payment From</th>
-                                    <th>Amount</th>
-                                    <th>Payment Type</th>
-                                    <th>Status</th>
-                                   
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {paymenthistory && paymenthistory.length > 0 && paymenthistory.map((item, i) => {
-                                    return (
-                                        <tr key={i}  >
-                                            <td>{i + 1 + "."}</td>
-                                            <td>{item.paymentDate}</td>
-                                            <td>{item.paymentFrom}</td>
-                                            <td>{item.paymentAmount}</td>
-                                            <td>{item.paymentType}</td>
-                                            <td>{item.successType}</td>
-                                           
+                    <Table striped>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Payment Date</th>
+                                <th>Payment From</th>
+                                <th>Amount</th>
+                                <th>Payment Type</th>
+                                <th>Payment Method</th>
+                                <th>Status</th>
 
-                                        </tr>
 
-                                    )
-                                })}
-                            </tbody>
-                        </Table>
-                    
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {paymenthistory && paymenthistory.length > 0 && paymenthistory.map((item, i) => {
+                                return (
+                                    <tr key={i}  >
+                                        <td>{i + 1 + "."}</td>
+                                        <td>{item.paymentDate}</td>
+                                        <td>{item.paymentFrom}</td>
+                                        <td>{item.paymentAmount}</td>
+                                        <td>{item.paymentType}</td>
+                                        <td>{item.paymentMethod}</td>
+                                        <td>{item.successType}</td>
+
+
+                                    </tr>
+
+                                )
+                            })}
+                        </tbody>
+                    </Table>
+
 
 
                 </ModalBody>

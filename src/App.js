@@ -8,6 +8,7 @@ import ApplicationFormBGV from './pages/ApplyForms/DocumentUpload';
 import CalculatorPage from './pages/LoanCalculator/CalculatorPage';
 import AboutUs from './pages/AboutAndContact/Aboutus';
 import Contact from './pages/AboutAndContact/Contactus';
+import "./App.css"
 
 
 const App = () => (

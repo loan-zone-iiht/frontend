@@ -1,4 +1,4 @@
-import React, { Fragment, useState ,useEffect} from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 
 import {
@@ -40,9 +40,9 @@ const ForgotPasword = ({ emailOrPhone }) => {
 
     const verifyOtp = async () => {
 
-        if(!checked){
+        if (!checked) {
             toast.info("Please check terms and Conditions");
-            return ;
+            return;
         }
 
         let url;
@@ -58,11 +58,13 @@ const ForgotPasword = ({ emailOrPhone }) => {
         console.log(payload, "payload");
 
         let response = await instance.post(url, payload);
-        if (response) {
+        console.log(response, "22")
+        if (response.headers.success) {
 
-            const custId = response.data.loanDetail.customer;
+            const custId = response.data.id;
             let loanId = null;
             if (response.data.loanDetail && response.data.loanDetail.loanId) {
+
                 loanId = response.data.loanDetail.loanId;
             }
             setisLoggedIn(() => {

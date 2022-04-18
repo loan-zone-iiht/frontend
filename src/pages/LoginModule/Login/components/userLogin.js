@@ -22,6 +22,7 @@ import {
     Alert
 } from "reactstrap";
 import Contact from "../../../AboutAndContact/Contactus";
+import "./userlogin.css";
 
 
 const options = [
@@ -61,7 +62,7 @@ const UserLogin = ({ forgotPasswordSelected, getUserCredentials }) => {
 
 
     return (
-        <div style={{ marginTop: "20%" }}>
+        <div style={{ marginTop: "20%" }} >
 
             <h4 className="mb-2">
                 <div >
@@ -160,11 +161,13 @@ const UserLogin = ({ forgotPasswordSelected, getUserCredentials }) => {
                             className="normal_text"
                             onChange={handleChange}
                         />
+                        <br />
                         {/* <Input type="password" name="password" id="examplePassword" placeholder="Password here..."/> */}
                         <a
                             // href="#"
                             onClick={() => forgotPasswordSelected(true)}
                             className="btn-sm btn btn-link normal_text forgot_password_remove_left_padding"
+
                         >
                             Forgot Password?
                         </a>{" "}
@@ -172,7 +175,10 @@ const UserLogin = ({ forgotPasswordSelected, getUserCredentials }) => {
                 </Col>
             </Row>
         </div>
+
     )
 }
 
 export default UserLogin;
+
+

@@ -35,14 +35,13 @@ const ApplicationForm = ({ match }) => {
     const [loanInput, setLoanInput] = useState({
         principal: "0",
         tenure: "0",
-        interestRate: "8",
         frequency: "1",
     });
 
     const [custId, setCustId] = useState("")
-    const [canlogin,setCanLoginIn] = useState(false)
+    const [canlogin, setCanLoginIn] = useState(false)
     const [message, setMessage] = useState(null)
-    
+
 
 
     const handleInputChange = (e) => {
@@ -64,20 +63,20 @@ const ApplicationForm = ({ match }) => {
     const handleLoanApplication = async () => {
 
         let payload = {
-            loanPrincipal : loanInput.principal,
-            loanTenure : loanInput.tenure,
-            loanInterestRate : loanInput.interestRate,
-            loanFrequency : loanInput.frequency
+            loanPrincipal: loanInput.principal,
+            loanTenure: loanInput.tenure,
+            loanInterestRate: Math.floor(Math.random() * (12 - 7 + 1) + 7),
+            loanFrequency: loanInput.frequency
         }
 
-    
-        let response = await instance.post(`/create-loandetail?custId=${localStorage.getItem("custId")}`,payload);
+
+        let response = await instance.post(`/create-loandetail?custId=${localStorage.getItem("custId")}`, payload);
         console.log(response)
         if (response.headers.success) {
             setMessage("Complain Filed Successfully. Please Login to Continue")
             setCanLoginIn(true)
         }
-        else{
+        else {
             setMessage(response.data)
         }
 
@@ -97,6 +96,7 @@ const ApplicationForm = ({ match }) => {
                                 name="customer_name"
                                 placeholder="Enter your name"
                                 type="text"
+                                required
                             ></Input>
                         </FormGroup>
                         <Row>
@@ -115,6 +115,7 @@ const ApplicationForm = ({ match }) => {
                                         aria-label="SSS"
                                         onChange={handleInputChange}
                                         value={loanInput.principal}
+                                        required
                                     />
 
                                     <Input
@@ -126,6 +127,7 @@ const ApplicationForm = ({ match }) => {
                                         step={1000}
                                         onChange={handleInputChange}
                                         value={loanInput.principal}
+                                        required
                                     />
                                 </FormGroup>
                             </Col>
@@ -140,6 +142,7 @@ const ApplicationForm = ({ match }) => {
                                         type="text"
                                         onChange={handleInputChange}
                                         value={loanInput.tenure}
+                                        required
                                     />
                                     <Input
                                         id="tenure"
@@ -150,6 +153,7 @@ const ApplicationForm = ({ match }) => {
                                         step={1}
                                         onChange={handleInputChange}
                                         value={loanInput.tenure}
+                                        required
                                     />
                                 </FormGroup>
                             </Col>
@@ -164,29 +168,19 @@ const ApplicationForm = ({ match }) => {
 
 
                                 <FormGroup>
-                                    <h5>Loan Interest Rate(R.O.I) in %</h5>
+                                    <h5>Total Family Income</h5>
 
                                     <Input
-                                        disabled
-                                        id="interestRate-in"
-                                        name="interestRate"
-                                        placeholder="Interest Rate"
+
+                                        id="family_income"
+                                        name="family_income"
+                                        placeholder="0"
                                         type="text"
-                                        onChange={handleInputChange}
-                                        value={loanInput.interestRate}
+
+
                                     />
 
-                                    <Input
-                                        disabled
-                                        id="interestRate"
-                                        name="interestRate"
-                                        type="range"
-                                        min={0}
-                                        max={20}
-                                        step={0.1}
-                                        onChange={handleInputChange}
-                                        value={loanInput.interestRate}
-                                    />
+
                                 </FormGroup>
                             </Col>
 
@@ -238,6 +232,20 @@ const ApplicationForm = ({ match }) => {
 
                                 </FormGroup>
                             </Col>
+                            <Col md="6">
+                                <FormGroup>
+                                    <h5 className="normal_text">Age</h5>
+                                    <Input
+                                        className=" form-control"
+                                        name="customer_gender"
+                                        placeholder="Enter your age"
+                                        type="number"
+                                        min={"23"}
+                                        max={"62"}
+                                        required
+                                    ></Input>
+                                </FormGroup>
+                            </Col>
                             {/* <Col>
                                  <a  href="/upload_file" class="btn btn-primary btn-sm mt-4" role="button">Proceed to Document Verification</a>
 
@@ -245,42 +253,42 @@ const ApplicationForm = ({ match }) => {
                         </Row>
                         <DocumentUpload />
 
-                       
+
                     </Form>
                     <Button color="primary"
-                            style={{ marginLeft: "5px" }}
-                            className=""
-                            size="md"
-                            onClick={handleLoanApplication}
-                        >
-                            Submit
-                        </Button>
+                        style={{ marginLeft: "5px" }}
+                        className=""
+                        size="md"
+                        onClick={handleLoanApplication}
+                    >
+                        Submit
+                    </Button>
 
-                        {message!=null && (
-                            <Alert  color="info" style={{ marginTop: "10px" }}>{message}</Alert>
-                        )}
+                    {message != null && (
+                        <Alert color="info" style={{ marginTop: "10px" }}>{message}</Alert>
+                    )}
 
-                        {canlogin && (
-                   
-                            
-                            
-                            <Link to="/login">
+                    {canlogin && (
+
+
+
+                        <Link to="/login">
 
                             <Button color="primary"
-                            style={{ marginLeft: "5px" }}
-                            className=""
-                            size="md"
-                            
-                        >
-                            Go to Login Page 
-                        </Button>
-                            </Link>
-                           
-                                
-                        )}
+                                style={{ marginLeft: "5px" }}
+                                className=""
+                                size="md"
+
+                            >
+                                Go to Login Page
+                            </Button>
+                        </Link>
+
+
+                    )}
                 </div>
             </div>
-        </div>
+        </div >
     );
 
 }

@@ -44,7 +44,7 @@ const AboutUs = () => {
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="/apply">
-            LoanZone
+            <h3>LoanZone</h3>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -55,19 +55,10 @@ const AboutUs = () => {
                 <a class="nav-link" aria-current="page" href="/home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/contact">Contact Us</a>
+                <a class="nav-link" aria-current="page" href="/calculator">Pricing Calculator</a>
               </li>
-            </ul>
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Account
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/login">Logout</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Go to Profile</a>
-                </div>
+              <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact Us</a>
               </li>
             </ul>
           </div>
@@ -102,7 +93,7 @@ const AboutUs = () => {
             </CardFooter>
           </Card>
           <Card>
-            <CardImg variant="top" src="sayak" />
+            <CardImg variant="top" src="https://i.ibb.co/MMf5Cgz/Sayak-1.jpg" />
             <CardBody>
               <CardTitle><h4>Sayak Mukherjee</h4></CardTitle>
               <CardText>
@@ -115,7 +106,7 @@ const AboutUs = () => {
             </CardFooter>
           </Card>
           <Card>
-            <CardImg variant="top" src="https://photos.google.com/photo/AF1QipMm1TgiI3QcVsdoRyn3uVa63jGDTAYrlrGaUpIt" />
+            <CardImg variant="top" src="https://i.ibb.co/bKZFWDk/ashish.jpg" />
             <CardBody>
               <CardTitle><h4>Ashish Gupta</h4></CardTitle>
               <CardText>
@@ -150,19 +141,6 @@ const AboutUs = () => {
                 "The bad news is time flies. The good news is you’re the pilot..."
               </CardText>
               <a target="_blank" href="https://www.linkedin.com/in/raktimchatterjee1998/" class="btn btn-primary btn-lg" role="button">Visit Profile</a>
-            </CardBody>
-            <CardFooter>
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </CardFooter>
-          </Card>
-          <Card>
-            <CardImg variant="top" src="https://media-exp1.licdn.com/dms/image/C5103AQHmHhQ_ychZwQ/profile-displayphoto-shrink_800_800/0/1586854631448?e=1655942400&v=beta&t=xAKXtvFiFEUDZy6SNMYYkE7ECAklNb3DiUJojcoaVfM" />
-            <CardBody>
-              <CardTitle><h4>Chandrika Bhattacharya</h4></CardTitle>
-              <CardText>
-                "Nothing is impossible. The word itself says ‘I’m possible!..."
-              </CardText>
-              <a target="_blank" href="https://www.linkedin.com/in/chandrika-bhattacharya/" class="btn btn-primary btn-lg" role="button">Visit Profile</a>
             </CardBody>
             <CardFooter>
               <small className="text-muted">Last updated 3 mins ago</small>

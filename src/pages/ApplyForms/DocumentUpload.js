@@ -31,7 +31,7 @@ const ApplicationFormBGV = () => {
 
     return (
         <div>
-            
+
             <div >
                 <h3>Background Verification :</h3><br />
                 <div className=" bg-light">
@@ -111,17 +111,15 @@ const ApplicationFormBGV = () => {
                             </Col>
                             <Col md="6">
                                 <FormGroup>
-                                    <Label>Employment Status</Label>
+                                    <Label>Marital Status</Label>
                                     <Input
                                         type="select"
                                         className="form-control"
                                         name="Employment Status"
                                     >
-                                        <option> Salaried
+                                        <option> Married
                                         </option>
-                                        <option > Self Employed
-                                        </option>
-                                        <option value="others"> Others
+                                        <option > Single
                                         </option>
                                     </Input>
 
@@ -138,8 +136,8 @@ const ApplicationFormBGV = () => {
                                 min={"0"}
                             ></Input>
                         </FormGroup>
-                       
-                      
+
+
                     </Form>
                 </div>
             </div>

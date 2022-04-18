@@ -30,7 +30,7 @@ const Contact = () => {
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
           <a class="navbar-brand" href="/home">
-            LoanZone
+            <h3>LoanZone</h3>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -41,12 +41,15 @@ const Contact = () => {
                 <a class="nav-link" aria-current="page" href="/home">Home</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="/calculator">Pricing Calculator</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/about">About Us</a>
               </li>
             </ul>
           </div>
         </div>
-      </nav>
+      </nav >
       <div class="container mt-3">
         <h3>Contact Us</h3><br />
         <div className=" p-4 bg-light">
@@ -126,7 +129,7 @@ const Contact = () => {
           </Row>
         </div>
       </div>
-    </div>
+    </div >
   );
 
 }

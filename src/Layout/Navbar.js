@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { Row, Col } from "reactstrap";
 
@@ -7,10 +8,10 @@ const Navbar = () => {
 
 
     return (
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/apply">
-                    LoanZone
+                    <h3>LoanZone</h3>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -31,16 +32,13 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Account
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/login">Logout</a>
-                                <div class="dropdown-divider"></div>
-                                {/* <a class="dropdown-item" href="">Go to Profile</a> */}
-                            </div>
-                        </li>
+                        <Link to="/login">
+                            <button
+                                color="primary"
+                                style={{ marginLeft: "5px" }}
+                                className="btn btn-md brand_background_color normal_text"
+                            >Logout</button>
+                        </Link>
                     </ul>
                 </div>
             </div>

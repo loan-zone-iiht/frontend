@@ -15,7 +15,7 @@ import {
     Button,
     Form,
 } from "reactstrap";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 
 const options = [
@@ -100,49 +100,49 @@ const Login = ({ isLoginOrRegistered }) => {
 
     const handleLoginUsingPassword = async () => {
         if (validate()) {
-          if (!localStorage.getItem("role")) {
-            toast.info("Please Select Role");
-            return;
-          }
-    
-          let url;
-          url =
-            localStorage.getItem("role") == "customer"
-              ? "/customer-login"
-              : "/manager-login";
-    
-          let payload = {
-            password: credentials.password,
-          };
-    
-          if (credentials.emailOrPhone.includes(".com"))
-            payload["email"] = credentials.emailOrPhone;
-          else payload["phone"] = credentials.emailOrPhone;
-    
-        //   console.log(payload, "payload");
-          try {
-            let response = await instance.post(url, payload);
-            if (response && response.headers.success) {
-            //   console.log(response.data, "response");
-              const custId = response.data.id;
-              let loanId = null;
-              if (response.data.loanDetail && response.data.loanDetail.loanId) {
-                loanId = response.data.loanDetail.loanId;
-              }
-              setisLoggedIn(() => {
-                setUserObj({
-                  custId,
-                  loanId,
-                });
-    
-                return true;
-              });
+            if (!localStorage.getItem("role")) {
+                toast.info("Please Select Role");
+                return;
             }
-          } catch (e) {
-            toast.info("Something is wrong.Please try again later.");
-          }
+
+            let url;
+            url =
+                localStorage.getItem("role") == "customer"
+                    ? "/customer-login"
+                    : "/manager-login";
+
+            let payload = {
+                password: credentials.password,
+            };
+
+            if (credentials.emailOrPhone.includes(".com"))
+                payload["email"] = credentials.emailOrPhone;
+            else payload["phone"] = credentials.emailOrPhone;
+
+            //   console.log(payload, "payload");
+            try {
+                let response = await instance.post(url, payload);
+                if (response && response.headers.success) {
+                    //   console.log(response.data, "response");
+                    const custId = response.data.id;
+                    let loanId = null;
+                    if (response.data.loanDetail && response.data.loanDetail.loanId) {
+                        loanId = response.data.loanDetail.loanId;
+                    }
+                    setisLoggedIn(() => {
+                        setUserObj({
+                            custId,
+                            loanId,
+                        });
+
+                        return true;
+                    });
+                }
+            } catch (e) {
+                toast.info("Something is wrong.Please try again later.");
+            }
         }
-      };
+    };
 
     return (
         <Form  >
@@ -157,7 +157,7 @@ const Login = ({ isLoginOrRegistered }) => {
                 )} */}
                 <div>
                     {!isForgotPassword ? (
-                        <div>
+                        <div >
                             <a onClick={() => {
                                 isLoginOrRegistered(false)
 
@@ -174,10 +174,20 @@ const Login = ({ isLoginOrRegistered }) => {
                                 {" "}
                                 Login
                             </Button>
+                            <Link to="/home">
+                                <Button
+                                    color="primary"
+                                    style={{ marginLeft: "5px" }}
+                                    className="btn btn-md brand_background_color normal_text"
+
+
+                                >
+                                    {" "}
+                                    Home Page
+                                </Button>
+                            </Link>
                         </div>
                     ) : null}
-
-
                 </div>
             </div>
         </Form>
