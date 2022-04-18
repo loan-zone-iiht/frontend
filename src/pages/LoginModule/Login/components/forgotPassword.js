@@ -73,7 +73,7 @@ const ForgotPasword = ({ emailOrPhone }) => {
 
                 return true;
             });
-            setisVerified(true)
+            // setisVerified(true)
         }
         else {
             toast.info("Please check your OTP");
@@ -90,7 +90,7 @@ const ForgotPasword = ({ emailOrPhone }) => {
                 </div>
 
             </h4>
-            {isVerified && (<Navigate to="/dashboards" />)}
+            {/* {isVerified && (<Navigate to="/dashboards" />)} */}
 
             <Row className="divider" />
 
