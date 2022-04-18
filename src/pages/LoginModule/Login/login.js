@@ -100,50 +100,49 @@ const Login = ({ isLoginOrRegistered }) => {
 
     const handleLoginUsingPassword = async () => {
         if (validate()) {
-            if (!localStorage.getItem("role")) {
-                toast.info("Please Select Role");
-                return;
+          if (!localStorage.getItem("role")) {
+            toast.info("Please Select Role");
+            return;
+          }
+    
+          let url;
+          url =
+            localStorage.getItem("role") == "customer"
+              ? "/customer-login"
+              : "/manager-login";
+    
+          let payload = {
+            password: credentials.password,
+          };
+    
+          if (credentials.emailOrPhone.includes(".com"))
+            payload["email"] = credentials.emailOrPhone;
+          else payload["phone"] = credentials.emailOrPhone;
+    
+        //   console.log(payload, "payload");
+          try {
+            let response = await instance.post(url, payload);
+            if (response && response.headers.success) {
+            //   console.log(response.data, "response");
+              const custId = response.data.id;
+              let loanId = null;
+              if (response.data.loanDetail && response.data.loanDetail.loanId) {
+                loanId = response.data.loanDetail.loanId;
+              }
+              setisLoggedIn(() => {
+                setUserObj({
+                  custId,
+                  loanId,
+                });
+    
+                return true;
+              });
             }
-
-            let url;
-            url =
-                localStorage.getItem("role") == "customer"
-                    ? "/customer-login"
-                    : "/manager-login";
-
-            let payload = {
-                password: credentials.password,
-            };
-
-            if (credentials.emailOrPhone.includes(".com"))
-                payload["email"] = credentials.emailOrPhone;
-            else payload["phone"] = credentials.emailOrPhone;
-
-            //   console.log(payload, "payload");
-            try {
-                let response = await instance.post(url, payload);
-                console.log(response)
-                if (response && response.headers.success) {
-                    //   console.log(response.data, "response");
-                    const custId = response.data.id;
-                    let loanId = null;
-                    if (response.data.loanDetail && response.data.loanDetail.loanId) {
-                        loanId = response.data.loanDetail.loanId;
-                    }
-                    setisLoggedIn(() => {
-                        setUserObj({
-                            custId,
-                            loanId,
-                        });
-
-                        return true;
-                    });
-                }
-            } catch (e) {
-                toast.info("Something is wrong.Please try again later.");
-            }
+          } catch (e) {
+            toast.info("Something is wrong.Please try again later.");
+          }
         }
-    };
+      };
 
     return (
         <Form  >
@@ -177,6 +176,8 @@ const Login = ({ isLoginOrRegistered }) => {
                             </Button>
                         </div>
                     ) : null}
+
+
                 </div>
             </div>
         </Form>

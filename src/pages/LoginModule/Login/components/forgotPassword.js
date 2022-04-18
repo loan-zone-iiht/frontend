@@ -1,5 +1,6 @@
-import React, { Fragment, useState } from "react";
-import { Navigate } from "react-router-dom";
+import React, { Fragment, useState ,useEffect} from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+
 import {
     Col,
     Row,
@@ -18,6 +19,24 @@ const ForgotPasword = ({ emailOrPhone }) => {
     const [otp, setOTP] = useState("")
     const [isVerified, setisVerified] = useState(false)
     const [checked, setChecked] = useState(false)
+    const [isLoggedIn, setisLoggedIn] = useState(false)
+    const [userObj, setUserObj] = useState({});
+
+
+
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            //   console.log(userObj, "userObj");
+            navigate("/dashboards", {
+                state: userObj,
+            });
+        }
+
+
+    }, [isLoggedIn])
+
+    const navigate = useNavigate();
 
     const verifyOtp = async () => {
 
@@ -39,8 +58,22 @@ const ForgotPasword = ({ emailOrPhone }) => {
         console.log(payload, "payload");
 
         let response = await instance.post(url, payload);
-        if (response.headers.success) {
-            setisVerified(true)
+        if (response) {
+
+            const custId = response.data.loanDetail.customer;
+            let loanId = null;
+            if (response.data.loanDetail && response.data.loanDetail.loanId) {
+                loanId = response.data.loanDetail.loanId;
+            }
+            setisLoggedIn(() => {
+                setUserObj({
+                    custId,
+                    loanId,
+                });
+
+                return true;
+            });
+            // setisVerified(true)
         }
         else {
             toast.info("Please check your OTP");
@@ -57,7 +90,7 @@ const ForgotPasword = ({ emailOrPhone }) => {
                 </div>
 
             </h4>
-            {isVerified && (<Navigate to="/dashboards" />)}
+            {/* {isVerified && (<Navigate to="/dashboards" />)} */}
 
             <Row className="divider" />
 
